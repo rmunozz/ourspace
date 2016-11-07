@@ -4,22 +4,81 @@
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script>
     var get_rooms_url = "{{=URL('api', 'get_rooms')}}";
-    var add_post_url = "{{=URL('api', 'add_post', user_signature=True)}}";
+    var add_room_url = "{{=URL('api', 'add_room', user_signature=True)}}";
     var del_post_url = "{{=URL('api', 'del_post', user_signature=True)}}";
 </script>
 {{end}}
 
+<script type="text/javascript">
+  var tag = document.createElement('script');
+  tag.id = 'iframe-demo';
+  tag.src = 'https://www.youtube.com/iframe_api';
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('vid', {
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+    });
+  }
+
+  // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+</script>
+
 <div class="main_content">
 
     <div id="vue-div" class="display:none">
+
+        <div class="button_bar">
+              <button v-if="!is_adding_room" class="btn btn-danger btn-sm"
+               v-on:click="add_room_button()" v-bind:class="{'disabled': !logged_in}">
+               <i class="fa fa-plus-square-o" aria-hidden="true"></i> Add new room
+             </button>
+              <button v-if="is_adding_room" class="btn btn-info btn-sm"
+               v-on:click="add_room_button()"> <i class="fa fa-ban" aria-hidden="true"></i> Cancel
+              </button>
+        </div>
+
         <div class="room_listing">
             <template v-for="room in rooms">
-                <div class="room_header">
+                <div class="room_header" v-on:click="expand_room(room._idx)">
                     <span>${room.name}</span>
                     <span>${room.owner_email}</span>
+                    <div v-if="is_in_room">
+                        <div v-if="room._idx === in_room_idx">
+                          <iframe id="vid"
+                          width="640" height="360"
+                          src="https://www.youtube.com/embed/1Bix44C1EzY"
+                          frameborder="0"
+                          style="border: solid 4px #37474F"></iframe>
+                        </div>
+                    </div>
                 </div>
             </template>
         </div>
+
+
     </div> <!-- END vue-div DIV -->
 
 </div> <!-- END main_content DIV -->

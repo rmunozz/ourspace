@@ -40,6 +40,18 @@ var app = function() {
 
     self.get_more = function () {};
 
+    self.add_room_button = function () {
+        // This function is called when the add room button is clicked
+        if(self.vue.logged_in)
+          self.vue.is_adding_room = !self.vue.is_adding_room;
+    };
+
+    self.expand_room = function (rooms_idx) {
+        console.log('expand room ' + rooms_idx);
+        self.vue.is_in_room = true;
+        self.vue.in_room_idx = rooms_idx;
+    };
+
 
     // Complete as needed.
     self.vue = new Vue({
@@ -51,10 +63,15 @@ var app = function() {
             has_more: false,
             logged_in: null,
             email: null,
+            in_room_idx: null,
+            is_adding_room: false,
+            is_in_room: false,
         },
         methods: {
             get_rooms: self.get_rooms,
-            get_more: self.get_more
+            get_more: self.get_more,
+            add_room_button: self.add_room_button,
+            expand_room: self.expand_room,
         }
 
     });

@@ -10,6 +10,7 @@
 db.define_table('room',
                 Field('name', 'string', default="Silly Room Name xD"),
                 Field('owner_email', default=auth.user.email if auth.user_id else None),
+                Field('video_queue', 'list:string'),
                 )
 
 # I don't want to display the user email by default in all forms.

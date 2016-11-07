@@ -19,12 +19,13 @@ def get_rooms():
     rows = db().select(db.room.ALL, limitby=(start_idx, end_idx + 1))
     for i, r in enumerate(rows):
         if i < end_idx - start_idx:
-            t = dict(
+            r = dict(
                 owner_email = r.owner_email,
                 name = r.name,
                 id = r.id,
+                video_queue = r.video_queue,
             )
-            rooms.append(t)
+            rooms.append(r)
         else:
             has_more = True
 
@@ -42,11 +43,18 @@ def get_rooms():
 
 
 # Note that we need the URL to be signed, as this changes the db.
-@auth.requires_signature()
-def add_post():
+@auth.requires_signature(hash_vars=False)
+def add_room():
     """Here you get a new post and add it.  Return what you want."""
-    # Implement me!
-    return response.json(dict())
+    r_id = db.post.insert(
+        post_content = request.vars.form_content,
+        user_email = request.vars.email,
+        user_name = get_user_name_from_email(request.vars.email),
+        created_on_human = humanize.naturaltime(datetime.datetime.utcnow()),
+
+    )
+    r = db.post(r_id)
+    return response.json(dict(room=r))
 
 
 @auth.requires_signature()
