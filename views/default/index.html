@@ -3,7 +3,7 @@
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script>
-    var get_posts_url = "{{=URL('api', 'get_posts', user_signature=True)}}";
+    var get_rooms_url = "{{=URL('api', 'get_rooms')}}";
     var add_post_url = "{{=URL('api', 'add_post', user_signature=True)}}";
     var del_post_url = "{{=URL('api', 'del_post', user_signature=True)}}";
 </script>
@@ -12,11 +12,16 @@
 <div class="main_content">
 
     <div id="vue-div" class="display:none">
-        <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
-    </div>
+        <div class="room_listing">
+            <template v-for="room in rooms">
+                <div class="room_header">
+                    <span>${room.name}</span>
+                    <span>${room.owner_email}</span>
+                </div>
+            </template>
+        </div>
+    </div> <!-- END vue-div DIV -->
 
-</div>
-
-</div>
+</div> <!-- END main_content DIV -->
 
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>
