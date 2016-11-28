@@ -17,18 +17,15 @@ def get_user_name_from_email(email):
     else:
         return ' '.join([u.first_name, u.last_name])
 
-
+@auth.requires_login()
 def index():
     """
     This is your main controller.
     """
-    # I am creating a bogus list here, just to have some divs appear in the
-    # view.  You need to read at most 20 posts from the database, in order of
-    # most recent first, and you need to return that list here.
-    # Note that posts is NOT a list of strings in your actual code; it is
-    # what you get from a db(...).select(...).
-    posts = ['banana', 'pear', 'eggplant']
-    return dict(posts=posts)
+    folder = []
+    for row in db().select(db.folders.ALL):
+        folder.append([row,get_user_name_from_email(row.user_email),row.folder_name,row.url_content])
+    return dict(folder=folder)
 
 
 @auth.requires_login()
