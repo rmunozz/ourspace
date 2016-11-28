@@ -29,10 +29,11 @@ def index():
 
 
 @auth.requires_login()
-def edit():
-    """
-    This is the page to create / edit / delete a post.
-    """
+def folder():
+    folder = None
+    if request.args(0) is None:
+        folder_type = 'create'
+        folder = SQLFORM(db.post)
     return dict()
 
 
@@ -72,5 +73,3 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
-
-

@@ -1,8 +1,17 @@
 {{extend 'layout.html'}}
 
+{{block head}}
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script>
+    var get_posts_url = "{{=URL('folder', 'get_posts')}}";
+    var add_post_url = "{{=URL('folder', 'add_post', user_signature=True)}}";
+    var del_post_url = "{{=URL('folder', 'del_post', user_signature=True)}}";
+    var is_edit_post_content = "{{=URL('folder','edit_post_url')}}";
+    var edit_post_submit = "{{=URL('folder', 'edit_post_submit', user_signature=True)}}";
+</script>
+{{end}}
 
 
-
-<a href="{{=URL('default', 'edit')}}" class="btn btn-warning">
+<a href="{{=URL('default', 'folder')}}" class="btn btn-warning">
             <i class="fa fa-plus"></i> New Folder
         </a>
