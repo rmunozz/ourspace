@@ -21,3 +21,8 @@
   -webkit-border-radius: 16px;
   border-radius: 16px;
 }
+
+.big-btn {
+    width: 90px;
+    height: 40px;
+}
