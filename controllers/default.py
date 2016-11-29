@@ -22,10 +22,12 @@ def index():
     """
     This is your main controller.
     """
+    check = ''
     folder = []
     for row in db().select(db.folders.ALL):
+        #check = (row.url_content).split(',')
         folder.append((row))
-    return dict(folder=folder)
+    return dict(folder=folder,check=check)
 
 
 

@@ -12,9 +12,17 @@
     {{for (folders) in folder:}}
         <div>
             <!-- Here goes the code to display an individual post. The code below is just a placeholder. -->
-            <button class="btn btn-default" onclick="alert('FUCK YOU!')">
-                <p>{{=folders.folder_name}}</p>
-            </button>
+
+                {{if auth.user.email == folders.user_email:}}
+                    <button class="btn btn-default" onclick="alert('FUCK YOU!')">
+                        <p>{{=folders.folder_name}}</p>
+                        <p>{{yugi=folders.url_content}}</p>
+
+                    </button>
+                {{pass}}
+
         </div>
     {{pass}}
+
+     
 </div>
