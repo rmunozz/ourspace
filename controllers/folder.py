@@ -37,11 +37,11 @@ def get_posts():
 
 # Note that we need the URL to be signed, as this changes the db.
 @auth.requires_signature(hash_vars=False)
-def add_post():
+def add_folder():
     """Here you get a new post and add it.  Return what you want."""
     # Implement me!
-    t_id = db.post.insert(
-        post_content=request.vars.post_content,
+    t_id = db.folders.insert(
+        folder_name=request.vars.post_content,
         user_email = request.vars.user_email
 
     )
