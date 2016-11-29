@@ -10,13 +10,8 @@
     var edit_post_submit = "{{=URL('folder', 'edit_post_submit', user_signature=True)}}";
 </script>
 {{end}}
-<div class="main_content">
-  <span id="vue-div" class="display:none">
-    <div v-if "'page' == 'folder'">
-    <a href="{{=URL('default', 'folder')}}" class="btn btn-warning">
-                <i class="fa fa-plus"></i> New Folder
-            </a>
-    </div>
-  </span>
-</div>
-<script src="{{=URL('static', 'js/default_index.js')}}"></script>
+
+
+<a href="{{=URL('default', 'folder')}}" class="btn btn-warning">
+            <i class="fa fa-plus"></i> New Folder
+        </a>
