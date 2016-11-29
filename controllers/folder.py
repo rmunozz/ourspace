@@ -1,35 +1,34 @@
 # These are the controllers for your ajax api.
 import datetime
-def get_posts():
+def get_folders():
 
     start_idx = int(request.vars.start_idx) if request.vars.start_idx is not None else 0
     end_idx = int(request.vars.end_idx) if request.vars.end_idx is not None else 0
 
-    """This controller is used to get the posts.  Follow what we did in lecture 10, to ensure
-    that the first time, we get 4 posts max, and each time the "load more" button is pressed,
-    we load at most 4 more posts."""
+    """This controller is used to get the folderss.  Follow what we did in lecture 10, to ensure
+    that the first time, we get 4 folderss max, and each time the "load more" button is pressed,
+    we load at most 4 more folderss."""
     # Implement me!\
-    posts = []
+    folders = []
     has_more = False
 
-    rows = db().select(db.post.ALL,orderby=~db.post.created_on, limitby=(start_idx, end_idx + 1))
+    rows = db().select(db.folders.ALL,orderby=~db.folders.url_content, limitby=(start_idx, end_idx + 1))
     for i, r in enumerate(rows):
         if i < end_idx - start_idx:
             t = dict(
-                post_content = r.post_content,
+                url_content = r.url_content,
+                folder_name = r.folder_name,
                 user_email = r.user_email,
-                created_on = r.created_on,
-                updated_on = r.updated_on,
-                post_id = r.id,
+                folder_id = r.id,
             )
-            posts.append(t)
+            folders.append(t)
         else:
             has_more = True
     logged_in = auth.user_id is not None
     email = auth.user.email
     return response.json(dict(
-        posts=posts,
-        logged_in=logged_in,
+        folders=folders,
+        logged_in = logged_in,
         has_more=has_more,
         email=email,
     ))
@@ -38,33 +37,33 @@ def get_posts():
 # Note that we need the URL to be signed, as this changes the db.
 @auth.requires_signature(hash_vars=False)
 def add_folder():
-    """Here you get a new post and add it.  Return what you want."""
+    """Here you get a new folders and add it.  Return what you want."""
     # Implement me!
     t_id = db.folders.insert(
-        folder_name=request.vars.post_content,
+        folder = request.vars.folder_name,
+        folder_content=request.vars.url_content,
         user_email = request.vars.user_email
 
     )
-    t = db.post(t_id)
-    return response.json(dict(post = t))
+    t = db.folders(t_id)
+    return response.json(dict(folders = t))
 
 
 @auth.requires_signature()
-def del_post():
-    """Used to delete a post."""
+def del_folder():
+    """Used to delete a folders."""
     # Implement me!
-    db(db.post.id == request.vars.post_id).delete()
+    db(db.folders.id == request.vars.folders_id).delete()
     return "ok"
     #return response.json(dict())
 
-def edit_post_url():
-    edit_content = db.post(db.post.id == request.vars.post_id).post_content
+def edit_folder_url():
+    edit_content = db.folders(db.folders.id == request.vars.folder_id).url_content
     return response.json(dict(edit_content=edit_content))
 
 @auth.requires_signature(hash_vars=False)
-def edit_post_submit():
-    p = db.post(db.post.id == request.vars.post_id)
-    p.post_content = request.vars.edit_content
-    p.updated_on = datetime.datetime.utcnow()
+def edit_folder_submit():
+    p = db.folders(db.folders.id == request.vars.folder_id)
+    p.url_content = request.vars.edit_content
     p.update_record()
-    return response.json(dict(post = p))
+    return response.json(dict(folders = p))

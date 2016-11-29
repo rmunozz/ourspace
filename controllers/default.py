@@ -33,7 +33,8 @@ def folder():
     folder = None
     if request.args(0) is None:
         folder_type = 'create'
-        folder = SQLFORM(db.post)
+        folder = SQLFORM(db.folders)
+
     return dict()
 
 

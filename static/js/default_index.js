@@ -18,91 +18,85 @@ var app = function() {
         return v.map(function(e) {e._idx = k++;});
     };
 
-    function posts_url(start_indx, end_indx){
+    function folder_url(start_indx, end_indx){
         var pp = {
             start_indx: start_indx,
             end_indx: end_indx
         };
-        return get_posts_url + "?" + $.param(pp);
+        return get_folders_url + "?" + $.param(pp);
     }
-    self.get_posts = function(){
-        $.getJSON(posts_url(0,4), function (data){
-           self.vue.posts = data.posts;
+    self.get_folders = function(){
+        $.getJSON(folder_url(0,4), function (data){
+           self.vue.folders = data.folders;
            self.vue.has_more = data.has_more;
            self.vue.logged_in = data.logged_in;
            self.vue.email = data.email;
-           enumerate(self.vue.posts);
+           enumerate(self.vue.folders);
 
         })
 
     };
     self.get_more = function () {
-        var num_posts = self.vue.posts.length;
-        $.getJSON(posts_url(num_posts, num_posts + 4), function (data) {
+        var num_folders = self.vue.folders.length;
+        $.getJSON(folders_url(num_folders, num_folders + 4), function (data) {
             self.vue.has_more = data.has_more;
-            self.extend(self.vue.posts, data.posts);
-            enumerate(self.vue.posts);
+            self.extend(self.vue.folders, data.folders);
+            enumerate(self.vue.folders);
         });
     };
-    self.add_post = function(){
-        self.vue.is_adding_post = false;
-        $.post(add_post_url,
+    self.add_folder = function(){
+        self.vue.is_adding_folders = false;
+        $.folders(add_folder_url,
             {
-
-                form_content: self.vue.form_content,
-                email:self.vue.email
+                folder_name: self.vue.folder,
+                url_content: self.vue.folder_content,
+                user_email:self.vue.email
 
             },
             function (data) {
-                $.web2py.enableElement($("#add_post_submit"));
-                self.vue.posts.unshift(data.post);
+                $.web2py.enableElement($("#add_folders_submit"));
+                self.vue.folders.unshift(data.folders);
                 self.vue.form_content = "";
-                enumerate(self.vue.posts);
+                enumerate(self.vue.folders);
             });
 
     };
 
-    self.adding_post_button = function () {
-        // The button to add a track has been pressed.
-        self.vue.is_adding_post = !self.vue.is_adding_post;
 
-    };
-
-    self.edit_post = function(post_idx){
-        var pp = {post_id:self.vue.posts[post_idx].post_id};
-        self.vue.edit_post_id = post_idx;
-        $.getJSON(is_edit_post_content + "?" + $.param(pp), function (data) {
+    self.edit_folder = function(folders_idx){
+        var pp = {folders_id:self.vue.folders[folders_idx].folders_id};
+        self.vue.edit_folders_id = folders_idx;
+        $.getJSON(is_edit_folders_content + "?" + $.param(pp), function (data) {
             self.vue.edit_content = data.edit_content;});
     };
 
     self.edit_submit = function(){
         console.log('inside edit_submit');
-      self.vue.is_edit_post = false;
+      self.vue.is_edit_folders = false;
       self.vue.edit_button = true;
-        $.post(edit_post_submit,{
+        $.folders(edit_folders_submit,{
             edit_content: self.vue.edit_content,
-            post_id: self.vue.posts[self.vue.edit_post_id].post_id
+            folders_id: self.vue.folders[self.vue.edit_folders_id].folders_id
         },
         function (data) {
-            $.web2py.enableElement($("#edit_post_submit"));
-            self.vue.posts[self.vue.edit_post_id].post_content=self.vue.edit_content;
-            self.vue.posts[self.vue.edit_post_id].updated_on = data.post.updated_on;
-            enumerate(self.vue.posts);
+            $.web2py.enableElement($("#edit_folders_submit"));
+            self.vue.folders[self.vue.edit_folders_id].folders_content=self.vue.edit_content;
+            enumerate(self.vue.folders);
         });
     };
-    self.edit_post_button = function (post_id) {
-        self.vue.is_edit_post = !self.vue.is_edit_post;
-        self.edit_post(post_id);
-    };
-    self.delete_post = function (post_id) {
-        $.post(del_post_url,
+    // self.edit_folders_button = function (folders_id) {
+    //     self.vue.is_edit_folders = !self.vue.is_edit_folders;
+    //     self.edit_folders(folders_id);
+    // };
+    self.delete_folder = function (folders_id) {
+        $.folders(del_folders_url,
             {
-                post_id: self.vue.posts[post_id].post_id
+                folders_id: self.vue.folders[folders_id].folders_id
             },
 
                 function () {
-                    self.vue.posts.splice(post_id , 1);
-                    enumerate(self.vue.posts);
+                    self.vue.folders.splice(folders_id , 1);
+                    enumerate(self.vue.folders);
                 })
 
     };
@@ -112,15 +106,16 @@ var app = function() {
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
-            posts: [],
-            get_post: false,
-            is_adding_post: false,
-            is_edit_post: false,
+            folders: [],
+            get_folders: false,
+            folder_name: null,
+            is_adding_folders: false,
+            is_edit_folders: false,
             has_more: false,
             logged_in: false,
-            email: null,
-            form_content: null,
-            edit_post_id: null,
+            user_email: null,
+            url_content: null,
+            edit_folders_id: null,
             edit_content: null,
             edit_button: false,
             page: 'default'
@@ -128,19 +123,17 @@ var app = function() {
 
         },
         methods: {
-            adding_post_button: self.adding_post_button,
             get_more: self.get_more,
-            add_post: self.add_post,
-            delete_post: self.delete_post,
-            edit_post_button: self.edit_post_button,
-            edit_post:self.edit_post,
+            add_folder: self.add_folder,
+            delete_folder: self.delete_folder,
+            edit_folder:self.edit_folder,
             edit_submit:self.edit_submit
 
         }
 
     });
 
-    self.get_posts();
+    self.get_folders();
     $("#vue-div").show();
     return self;
 };

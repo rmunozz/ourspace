@@ -1,15 +1,5 @@
 {{extend 'layout.html'}}
 
-{{block head}}
-<script src="{{=URL('static', 'js/vue.js')}}"></script>
-<script>
-    var get_posts_url = "{{=URL('folder', 'get_urls')}}";
-    var add_post_url = "{{=URL('folder', 'add_urls', user_signature=True)}}";
-    var del_post_url = "{{=URL('folder', 'del_urls', user_signature=True)}}";
-    var is_edit_post_content = "{{=URL('folder','edit_url')}}";
-    var edit_post_submit = "{{=URL('folder', 'edit_post_submit', user_signature=True)}}";
-</script>
-{{end}}
 
 
 <a href="{{=URL('default', 'folder.html')}}" class="btn btn-warning">

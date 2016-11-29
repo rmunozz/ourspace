@@ -1,53 +1,65 @@
 {{extend 'layout.html'}}
+{{block head}}
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script>
+    var get_folders_url = "{{=URL('folder', 'get_folders')}}";
+    var add_folder_url = "{{=URL('folder', 'add_folder', user_signature=True)}}";
+    var del_folder_url = "{{=URL('folder', 'del_folder', user_signature=True)}}";
+    var is_edit_url_content = "{{=URL('folder','edit_folder_url')}}";
+    var edit_folder_submit = "{{=URL('folder', 'edit_folder_submit', user_signature=True)}}";
+</script>
+{{end}}
 
+<div id="vue-div" class="display:none">
 
-
-<form action="#" class="form-horizontal" enctype="multipart/form-data" method="post">
-  <div class="form-group" id="folders_user_email__row">
-    <label class="control-label col-sm-3" for="folders_user_email" id="folders_user_email__label">User Email</label>
-    <div class="col-sm-9">
-      <input class="form-control string" id="folders_user_email" name="user_email" type="text" value="bijansemnani@gmail.com">
-      <span class="help-block"></span>
+  <form action="#" class="form-horizontal" enctype="multipart/form-data" method="post">
+    <div class="form-group" id="folders_user_email__row">
+      <label class="control-label col-sm-3" for="folders_user_email" id="folders_user_email__label">User Email</label>
+      <div class="col-sm-9">
+        <input class="form-control string" id="folders_user_email" name="user_email" type="text" v-model ="user_email" value="">
+        <span class="help-block"></span>
+      </div>
     </div>
-  </div>
-  <div class="form-group" id="folders_folder_name__row">
-    <label class="control-label col-sm-3" for="folders_folder_name" id="folders_folder_name__label">Folder Name</label>
-    <div class="col-sm-9">
-      <textarea class="text form-control" cols="1" id="folders_folder_name" name="folder_name" rows="1"></textarea>
-      <span class="help-block"></span>
+    <div class="form-group" id="folders_folder_name__row">
+      <label class="control-label col-sm-3" for="folders_folder_name" id="folders_folder_name__label">Folder Name</label>
+      <div class="col-sm-9">
+        <textarea class="text form-control" cols="1" id="folders_folder_name" name="folder_name" v-model="folder_name" rows="1"></textarea>
+        <span class="help-block"></span>
+      </div>
     </div>
-  </div>
-  <div class="form-group" id="folders_url_content__row">
-    <label class="control-label col-sm-3" for="folders_url_content" id="folders_url_content__label">Url Content</label>
-    <div class="col-sm-9">
-      <ul class="w2p_list" id="folders_url_content_grow_input" style="list-style:none">
-        <li>
-          <div class="input-group">
-            <input class="form-control string" id="folders_url_content" name="url_content" type="text" value="">
+    <div class="form-group" id="folders_url_content__row">
+      <label class="control-label col-sm-3" for="folders_url_content" id="folders_url_content__label">Url Content</label>
+      <div class="col-sm-9">
+        <ul class="w2p_list" id="folders_url_content_grow_input" style="list-style:none">
+          <li>
+            <div class="input-group">
+              <input class="form-control string" id="folders_url_content" name="url_content" v-model="url_content" type="text" value="">
 
-          </div>
-        </li>
-      </ul>
-      <span class="help-block"></span>
+            </div>
+          </li>
+        </ul>
+        <span class="help-block"></span>
+      </div>
     </div>
-  </div>
-  <div class="form-group" id="submit_record__row">
-    <div class="col-sm-9 col-sm-offset-3">
-      <input class="btn btn-primary" type="submit" value="Submit">
+    <div class="form-group" id="submit_record__row">
+      <div class="col-sm-9 col-sm-offset-3">
+        <input class="btn btn-primary" type="submit" value="Submit">
 
-      <span>
-          <a href="{{=URL('default', 'index.html')}}" class="btn btn-warning">
-            <i></i> Cancel
-        </a>
+        <span>
+            <a href="{{=URL('default', 'index.html')}}" class="btn btn-warning">
+              <i></i> Cancel
+          </a>
 
-      </span>
+        </span>
+      </div>
+
+
+
     </div>
-
-
-
-  </div>
-  <div style="display:none;">
-    <input name="_formkey" type="hidden" value="b9987b9f-c1be-4b27-9375-bb0c4c70daaf">
-    <input name="_formname" type="hidden" value="folders/create">
-  </div>
-</form>
+    <div style="display:none;">
+      <input name="_formkey" type="hidden" value="b9987b9f-c1be-4b27-9375-bb0c4c70daaf">
+      <input name="_formname" type="hidden" value="folders/create">
+    </div>
+  </form>
+</div>
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>
