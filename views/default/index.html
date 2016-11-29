@@ -14,4 +14,17 @@
 
 <a href="{{=URL('default', 'folder.html')}}" class="btn btn-warning">
             <i class="fa fa-plus"></i> New Folder
-        </a>
+</a>
+
+
+<div>
+
+    {{for (folders) in folder:}}
+        <div>
+            <!-- Here goes the code to display an individual post. The code below is just a placeholder. -->
+            <button class="btn btn-default" onclick="alert('FUCK YOU!')">
+                <p>{{=folders.folder_name}}</p>
+            </button>
+        </div>
+    {{pass}}
+</div>
