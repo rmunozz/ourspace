@@ -24,8 +24,10 @@ def index():
     """
     folder = []
     for row in db().select(db.folders.ALL):
-        folder.append([row,get_user_name_from_email(row.user_email),row.folder_name,row.url_content])
+        folder.append((row))
     return dict(folder=folder)
+
+
 
 
 @auth.requires_login()
