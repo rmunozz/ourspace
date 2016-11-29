@@ -19,7 +19,7 @@ db.define_table('post',
 db.define_table('folders',
                 Field('user_email', default=auth.user.email if auth.user_id else None),
                 Field('folder_name', 'text'),
-                Field('url_content', 'list:reference'),
+                Field('url_content', 'list:string'),
                 )
 
 # I don't want to display the user email by default in all forms.
