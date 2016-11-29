@@ -122,7 +122,8 @@ var app = function() {
             form_content: null,
             edit_post_id: null,
             edit_content: null,
-            edit_button: false
+            edit_button: false,
+            page: 'default'
 
 
         },
