@@ -12,7 +12,7 @@ def get_folders():
     folders = []
     has_more = False
 
-    rows = db().select(db.folders.ALL,orderby=~db.folders.url_content, limitby=(start_idx, end_idx + 1))
+    rows = db().select(db.folder.ALL,orderby=~db.folder.url_content, limitby=(start_idx, end_idx + 1))
     for i, r in enumerate(rows):
         if i < end_idx - start_idx:
             t = dict(
@@ -37,33 +37,31 @@ def get_folders():
 # Note that we need the URL to be signed, as this changes the db.
 @auth.requires_signature(hash_vars=False)
 def add_folder():
-    """Here you get a new folders and add it.  Return what you want."""
-    # Implement me!
-    t_id = db.folders.insert(
-        folder = request.vars.folder_name,
+    t_id = db.folder.insert(
+        folder_name = request.vars.folder_name,
         folder_content=request.vars.url_content,
         user_email = request.vars.user_email
 
     )
-    t = db.folders(t_id)
-    return response.json(dict(folders = t))
+    t = db.folder(t_id)
+    return response.json(dict(folder = t))
 
 
 @auth.requires_signature()
 def del_folder():
     """Used to delete a folders."""
     # Implement me!
-    db(db.folders.id == request.vars.folders_id).delete()
+    db(db.folder.id == request.vars.folders_id).delete()
     return "ok"
     #return response.json(dict())
 
 def edit_folder_url():
-    edit_content = db.folders(db.folders.id == request.vars.folder_id).url_content
+    edit_content = db.folder(db.folder.id == request.vars.folder_id).url_content
     return response.json(dict(edit_content=edit_content))
 
 @auth.requires_signature(hash_vars=False)
 def edit_folder_submit():
-    p = db.folders(db.folders.id == request.vars.folder_id)
+    p = db.folder(db.folder.id == request.vars.folder_id)
     p.url_content = request.vars.edit_content
     p.update_record()
     return response.json(dict(folders = p))

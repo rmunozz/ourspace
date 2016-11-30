@@ -16,7 +16,7 @@ db.define_table('post',
                 Field('updated_on', 'datetime', update=datetime.datetime.utcnow()),
                 )
 
-db.define_table('folders',
+db.define_table('folder',
                 Field('user_email', default=auth.user.email if auth.user_id else None),
                 Field('folder_name', 'text'),
                 Field('url_content', 'list:string'),

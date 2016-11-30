@@ -24,7 +24,7 @@ def index():
     """
     check = ''
     folder = []
-    for row in db().select(db.folders.ALL):
+    for row in db().select(db.folder.ALL):
         #check = (row.url_content).split(',')
         folder.append((row))
     return dict(folder=folder,check=check)
@@ -37,7 +37,7 @@ def folder():
     folder = None
     if request.args(0) is None:
         folder_type = 'create'
-        folder = SQLFORM(db.folders)
+        folder = SQLFORM(db.folder)
 
     return dict()
 

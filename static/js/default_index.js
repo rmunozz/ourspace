@@ -38,7 +38,7 @@ var app = function() {
     };
     self.get_more = function () {
         var num_folders = self.vue.folders.length;
-        $.getJSON(folders_url(num_folders, num_folders + 4), function (data) {
+        $.getJSON(folder_url(num_folders, num_folders + 4), function (data) {
             self.vue.has_more = data.has_more;
             self.extend(self.vue.folders, data.folders);
             enumerate(self.vue.folders);
@@ -46,18 +46,18 @@ var app = function() {
     };
     self.add_folder = function(){
         self.vue.is_adding_folders = false;
-        $.folders(add_folder_url,
+        $.folder(add_folder_url,
             {
-                folder_name: self.vue.folder,
+                folder_name: self.vue.folder_name,
                 url_content: self.vue.folder_content,
-                user_email:self.vue.email
+                email:self.vue.email
 
             },
             function (data) {
-                $.web2py.enableElement($("#add_folders_submit"));
-                self.vue.folders.unshift(data.folders);
-                self.vue.form_content = "";
-                enumerate(self.vue.folders);
+                $.web2py.enableElement($("#add_folder_submit"));
+                self.vue.folders.unshift(data.folder);
+                self.vue.folder_content = "";
+                enumerate(self.vue.folder);
             });
 
     };
@@ -66,7 +66,7 @@ var app = function() {
     self.edit_folder = function(folders_idx){
         var pp = {folders_id:self.vue.folders[folders_idx].folders_id};
         self.vue.edit_folders_id = folders_idx;
-        $.getJSON(is_edit_folders_content + "?" + $.param(pp), function (data) {
+        $.getJSON(is_edit_url_content + "?" + $.param(pp), function (data) {
             self.vue.edit_content = data.edit_content;});
     };
 
@@ -74,7 +74,7 @@ var app = function() {
         console.log('inside edit_submit');
       self.vue.is_edit_folders = false;
       self.vue.edit_button = true;
-        $.folders(edit_folders_submit,{
+        $.folders(edit_folder_submit,{
             edit_content: self.vue.edit_content,
             folders_id: self.vue.folders[self.vue.edit_folders_id].folders_id
         },
@@ -113,7 +113,7 @@ var app = function() {
             is_edit_folders: false,
             has_more: false,
             logged_in: false,
-            user_email: null,
+            email: null,
             url_content: null,
             edit_folders_id: null,
             edit_content: null,
