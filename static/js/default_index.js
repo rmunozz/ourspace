@@ -15,6 +15,7 @@ var app = function() {
     // Enumerates an array.
     var enumerate = function(v) {
         var k=0;
+        return;
         return v.map(function(e) {e._idx = k++;});
     };
 
@@ -46,7 +47,7 @@ var app = function() {
     };
     self.add_folder = function(){
         self.vue.is_adding_folders = false;
-        $.folder(add_folder_url,
+        $.post(add_folder_url,
             {
                 folder_name: self.vue.folder_name,
                 url_content: self.vue.folder_content,

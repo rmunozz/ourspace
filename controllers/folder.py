@@ -39,8 +39,8 @@ def get_folders():
 def add_folder():
     t_id = db.folder.insert(
         folder_name = request.vars.folder_name,
-        folder_content=request.vars.url_content,
-        user_email = request.vars.user_email
+        url_content=request.vars.url_content,
+        user_email = request.vars.email
 
     )
     t = db.folder(t_id)
