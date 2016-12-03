@@ -8,7 +8,6 @@
 
 
 <div>
-
     <p>{{=user_urls}}</p>
 <!-- testing for having the correct values -->
     {{for (folders) in folder:}}
@@ -16,21 +15,22 @@
             {{if auth.user.email == folders.user_email:}}
                 <button class="btn btn-default" onclick="alert('FUCK YOU!')">
                         <p>{{=folders.folder_name}}</p>
-
                         <!--    <p>{{=folders.url_content[0]}}</p>  -->
                         <!--    <p>{{=len(folders.url_content)}}</p>    -->
-
+                        <!--
                         {{for i in range(0,len(folders.url_content)):}}
                             <p>{{=folders.url_content[i]}}</p>
                         {{pass}}
-
+                        -->
                 </button>
             {{pass}}
         </div>
     {{pass}}
 
-<!-- testing for opening urls -->
 
+
+
+<!-- testing for opening urls -->
     {{for url in urls:}}
         <div>
             <!-- Here goes the code to display an individual post. The code below is just a placeholder. -->
@@ -40,6 +40,7 @@
                 </form>
         </div>
     {{pass}}
+
 
      
 </div>
