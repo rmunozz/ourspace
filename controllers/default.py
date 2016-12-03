@@ -27,7 +27,14 @@ def index():
     for row in db().select(db.folder.ALL):
         #check = (row.url_content).split(',')
         folder.append((row))
-    return dict(folder=folder,check=check)
+
+    urls = []
+    user_urls = db(db.folder.user_email == auth.user.email).select()
+
+    #urls = user_urls
+    urls = ['google.com', 'facebook.com']
+    # urls.append(user_urls)
+    return dict(folder=folder,check=check,urls=urls, user_urls=user_urls)
 
 
 
