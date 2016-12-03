@@ -1,5 +1,8 @@
 {{extend 'layout.html'}}
 
+{{block head}}
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+{{end}}
 
 
 <a href="{{=URL('default', 'folder.html')}}" class="btn btn-warning">
@@ -8,39 +11,19 @@
 
 
 <div>
-    <p>{{=user_urls}}</p>
-<!-- testing for having the correct values -->
-    {{for (folders) in folder:}}
+    <div id="vue-div">
+        <p>{{=user_urls}}</p>
+        <!-- testing for having the correct values -->
+        {{for (folders) in folder:}}
         <div>
             {{if auth.user.email == folders.user_email:}}
-                <button class="btn btn-default" onclick="alert('FUCK YOU!')">
+                <button class="btn" v-on:click="open_urls({{=folders.url_content}})">
                         <p>{{=folders.folder_name}}</p>
-                        <!--    <p>{{=folders.url_content[0]}}</p>  -->
-                        <!--    <p>{{=len(folders.url_content)}}</p>    -->
-                        <!--
-                        {{for i in range(0,len(folders.url_content)):}}
-                            <p>{{=folders.url_content[i]}}</p>
-                        {{pass}}
-                        -->
                 </button>
             {{pass}}
         </div>
     {{pass}}
 
-
-
-
-<!-- testing for opening urls -->
-    {{for url in urls:}}
-        <div>
-            <!-- Here goes the code to display an individual post. The code below is just a placeholder. -->
-                <p>{{=url}}</p>
-                <form action= "http://{{=url}}" target="_blank">
-                    <input type="submit" value={{=url}} />
-                </form>
-        </div>
-    {{pass}}
-
-
-     
+     </div> <!--End of Vue div-->
 </div>
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>
