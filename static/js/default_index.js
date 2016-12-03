@@ -90,7 +90,7 @@ var app = function() {
     //     self.edit_folders(folders_id);
     // };
     self.delete_folder = function (folders_id) {
-        $.folders(del_folders_url,
+        $.post(del_folders_url,
             {
                 folders_id: self.vue.folders[folders_id].folders_id
             },
@@ -101,7 +101,7 @@ var app = function() {
                 })
 
     };
-    
+
 
     // Complete as needed.
     self.vue = new Vue({
