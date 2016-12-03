@@ -47,16 +47,17 @@ var app = function() {
     };
     self.add_folder = function(){
         self.vue.is_adding_folders = false;
-        var url_fields = [];
+        var url_inputs = [];
         self.vue.url_input_fields.forEach(function (element)
                                           {
-                                            console.log(element.url_field);
-                                            url_fields.push(element.url_field);
+                                            url_inputs.push(element.url_field);
                                           } );
+        console.log(url_inputs);
+        var url_inputs_stringy = JSON.stringify(url_inputs);
         $.post(add_folder_url,
             {
                 folder_name: self.vue.folder_name,
-                url_fields: url_fields,
+                url_fields: url_inputs_stringy,
                 email:self.vue.email
 
             },
