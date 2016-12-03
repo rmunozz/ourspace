@@ -101,6 +101,8 @@ var app = function() {
                 })
 
     };
+    
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -129,6 +131,7 @@ var app = function() {
             delete_folder: self.delete_folder,
             edit_folder:self.edit_folder,
             edit_submit:self.edit_submit
+
 
         }
 
