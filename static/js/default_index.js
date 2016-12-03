@@ -107,6 +107,12 @@ var app = function() {
         console.log(url_string);
         for(i=0;i<(url_string).length;i++) {
             console.log(i);
+            res = (url_string[i]).substr(0,8);
+            if(res!="https://"){
+                console.log("got here");
+                url_string[i] = "https://" + url_string[i]
+            }
+
             self.open(url_string[i])
         }
         //self.open();
