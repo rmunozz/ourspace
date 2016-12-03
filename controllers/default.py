@@ -31,9 +31,8 @@ def index():
     urls = []
     user_urls = db(db.folder.user_email == auth.user.email).select()
 
-    #urls = user_urls
+
     urls = ['google.com', 'facebook.com']
-    # urls.append(user_urls)
     return dict(folder=folder,check=check,urls=urls, user_urls=user_urls)
 
 

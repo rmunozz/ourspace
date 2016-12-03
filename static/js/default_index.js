@@ -101,6 +101,21 @@ var app = function() {
                 })
 
     };
+
+    self.open_urls = function (url_string) {
+        console.log("String list size" + (url_string).length);
+        console.log(url_string);
+        for(i=0;i<(url_string).length;i++) {
+            console.log(i);
+            self.open(url_string[i])
+        }
+        //self.open();
+    };
+
+    self.open = function(url){
+        window.open(url,"_blank");
+    }
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -121,14 +136,15 @@ var app = function() {
             edit_button: false,
             page: 'default'
 
-
         },
         methods: {
             get_more: self.get_more,
             add_folder: self.add_folder,
             delete_folder: self.delete_folder,
             edit_folder:self.edit_folder,
-            edit_submit:self.edit_submit
+            edit_submit:self.edit_submit,
+
+            open_urls: self.open_urls
 
         }
 
