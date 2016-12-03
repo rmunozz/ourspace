@@ -50,7 +50,7 @@ var app = function() {
         $.post(add_folder_url,
             {
                 folder_name: self.vue.folder_name,
-                url_content: self.vue.folder_content,
+                url_content: self.vue.url_content,
                 email:self.vue.email
 
             },
