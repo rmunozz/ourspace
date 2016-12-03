@@ -47,10 +47,17 @@ var app = function() {
     };
     self.add_folder = function(){
         self.vue.is_adding_folders = false;
+        var url_inputs = [];
+        self.vue.url_input_fields.forEach(function (element)
+                                          {
+                                            url_inputs.push(element.url_field);
+                                          } );
+        console.log(url_inputs);
+        var url_inputs_stringy = JSON.stringify(url_inputs);
         $.post(add_folder_url,
             {
                 folder_name: self.vue.folder_name,
-                url_content: self.vue.url_content,
+                url_fields: url_inputs_stringy,
                 email:self.vue.email
 
             },
@@ -75,7 +82,7 @@ var app = function() {
         console.log('inside edit_submit');
       self.vue.is_edit_folders = false;
       self.vue.edit_button = true;
-        $.folders(edit_folder_submit,{
+        $.post(edit_folder_submit,{
             edit_content: self.vue.edit_content,
             folders_id: self.vue.folders[self.vue.edit_folders_id].folders_id
         },
@@ -90,7 +97,7 @@ var app = function() {
     //     self.edit_folders(folders_id);
     // };
     self.delete_folder = function (folders_id) {
-        $.folders(del_folders_url,
+        $.post(del_folders_url,
             {
                 folders_id: self.vue.folders[folders_id].folders_id
             },
@@ -103,24 +110,28 @@ var app = function() {
     };
 
     self.open_urls = function (url_string) {
-        console.log("String list size" + (url_string).length);
-        console.log(url_string);
-        for(i=0;i<(url_string).length;i++) {
-            console.log(i);
-            res = (url_string[i]).substr(0,8);
-            if(res!="https://"){
-                console.log("got here");
-                url_string[i] = "https://" + url_string[i]
-            }
-
-            self.open(url_string[i])
-        }
-        //self.open();
+      var url_json = JSON.parse(url_string);
+      $.each(url_json, function(index)
+                       {
+                         self.vue.open(url_json[index]);
+                       });
     };
 
     self.open = function(url){
+        console.log(url);
         window.open(url,"_blank");
     }
+
+
+    self.add_folder_entry = function () { // vue.js nation
+      console.log("add folder entry");
+      self.vue.url_input_fields.push({url_field: ""});
+    };
+
+    self.delete_folder_entry = function () {
+      console.log("remove folder entry");
+      self.vue.url_input_fields.pop();
+    };
 
 
     // Complete as needed.
@@ -141,19 +152,25 @@ var app = function() {
             edit_folders_id: null,
             edit_content: null,
             edit_button: false,
-            page: 'default'
+            page: 'default',
+
+            next_input_idx: 0,
+            url_input_fields: [{url_field: ""}]
 
         },
         methods: {
             get_more: self.get_more,
             add_folder: self.add_folder,
             delete_folder: self.delete_folder,
+
+            add_folder_entry: self.add_folder_entry,
+            delete_folder_entry: self.delete_folder_entry,
+
             edit_folder:self.edit_folder,
             edit_submit:self.edit_submit,
 
-            open_urls: self.open_urls
-
-
+            open: self.open,
+            open_urls: self.open_urls,
         }
 
     });

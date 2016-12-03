@@ -39,7 +39,7 @@ def get_folders():
 def add_folder():
     t_id = db.folder.insert(
         folder_name = request.vars.folder_name,
-        url_content=request.vars.url_content,
+        url_content= request.vars.url_fields,
         user_email = request.vars.email
 
     )
