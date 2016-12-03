@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aeb72c24-3fff-4a47-a6e0-8c09ede445d4" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/default_index.js" afterPath="$PROJECT_DIR$/static/js/default_index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/default/folder.html" afterPath="$PROJECT_DIR$/views/default/folder.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/default/index.html" afterPath="$PROJECT_DIR$/views/default/index.html" />
     </list>
     <ignored path="ourspace.iws" />
@@ -27,8 +29,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/default/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="66" selection-start-line="4" selection-start-column="66" selection-end-line="4" selection-end-column="66" />
+            <state relative-caret-position="315">
+              <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -38,8 +40,10 @@
         <entry file="file://$PROJECT_DIR$/views/default/folder.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
-              <caret line="4" column="62" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="62" />
-              <folding />
+              <caret line="5" column="62" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="62" />
+              <folding>
+                <marker date="1480754721000" expanded="true" signature="2666:2677" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -798,15 +802,17 @@
     <entry file="file://$PROJECT_DIR$/views/default/folder.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="4" column="62" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="62" />
-          <folding />
+          <caret line="5" column="62" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="62" />
+          <folding>
+            <marker date="1480754721000" expanded="true" signature="2666:2677" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/default/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="66" selection-start-line="4" selection-start-column="66" selection-end-line="4" selection-end-column="66" />
+        <state relative-caret-position="315">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
           <folding />
         </state>
       </provider>

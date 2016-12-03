@@ -50,7 +50,7 @@ var app = function() {
         $.post(add_folder_url,
             {
                 folder_name: self.vue.folder_name,
-                url_content: self.vue.folder_content,
+                url_content: self.vue.url_content,
                 email:self.vue.email
 
             },
@@ -122,6 +122,7 @@ var app = function() {
         window.open(url,"_blank");
     }
 
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -151,6 +152,7 @@ var app = function() {
             edit_submit:self.edit_submit,
 
             open_urls: self.open_urls
+
 
         }
 

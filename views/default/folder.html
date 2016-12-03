@@ -10,6 +10,7 @@
 </script>
 {{end}}
 
+
 <div id="vue-div" class="display:none">
 
   <form action="#" v-on:submit.prevent="add_folder"  class="form-horizontal" enctype="multipart/form-data" method="post">
@@ -29,24 +30,29 @@
       </div>
     </div>
 
-    <div class="form-group" id="folders_url_content__row">
-      <label class="control-label col-sm-3" for="folders_url_content" id="folders_url_content__label">Url Content</label>
+    <div class="form-group" id="folder_url_content__row">
+      <label class="control-label col-sm-3" for="folder_url_content" id="folder_url_content__label">Url Content</label>
       <div class="col-sm-9">
-        <ul class="w2p_list" id="folders_url_content_grow_input" style="list-style:none">
-          <li>
-            <div class="input-group">
-              <input class="form-control string" id="folders_url_content" name="url_content" v-model="url_content" type="text" value="">
+        <ul class="w2p_list" id="folder_url_content_grow_input" style="list-style:none">
+          <li><div class="input-group">
+            <input class="form-control string" id="folder_url_content" name="url_content" type="text" v-model="url_content" value="">
+            <div class="input-group-addon">
+              <i class="glyphicon glyphicon-plus">
+              </i>
             </div>
-          </li>
-        </ul>
-        <span class="help-block"></span>
-      </div>
+            <div class="input-group-addon">
+              <i class="glyphicon glyphicon-minus">
+              </i>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <span class="help-block"></span>
     </div>
-
+  </div>
     <div class="form-group" id="submit_record__row">
       <div class="col-sm-9 col-sm-offset-3">
-        <input class="btn btn-primary" type="submit" value="Submit">
-
+        <input class="btn btn-primary" type="submit" value="Submit" >
         <span>
             <a href="{{=URL('default', 'index.html')}}" class="btn btn-warning">
               <i></i> Cancel
@@ -54,10 +60,6 @@
 
         </span>
       </div>
-    </div>
-    <div style="display:none;">
-      <input name="_formkey" type="hidden" value="b9987b9f-c1be-4b27-9375-bb0c4c70daaf">
-      <input name="_formname" type="hidden" value="folders/create">
     </div>
   </form>
 </div>
