@@ -17,8 +17,8 @@
   <input v-model="folder_name" placeholder="Folder Name">
   <p>
 
-  <div id="url_fields" class="url_fields">
-
+  <div v-for="url_field in url_input_fields">
+    <input v-model="url_input_fields.url_field" placeholder="Insert link here">
   </div>
 
   <p>
