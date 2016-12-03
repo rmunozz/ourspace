@@ -113,6 +113,10 @@ var app = function() {
       var url_json = JSON.parse(url_string);
       $.each(url_json, function(index)
                        {
+                         res = (url_json[index]).substr(0,8);
+                         if(res != "https://"){
+                           url_json[index] = "https://" + url_json[index];
+                         }
                          self.vue.open(url_json[index]);
                        });
     };
