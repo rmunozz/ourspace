@@ -102,6 +102,26 @@ var app = function() {
 
     };
 
+    self.add_folder_entry = function () { // jQuery nation
+      console.log("add folder entry");
+      var $new_field = $("<input v-model=\"url_content\" placeholder=\"Insert link here\">");
+      $($new_field).attr("id", self.vue.get_field_tag());
+      $("#url_fields").append($new_field);
+    };
+
+    self.get_field_tag = function () {
+      var new_tag =  "new_field_" + self.vue.next_field_tag;
+      self.vue.next_field_tag++;
+      return new_tag;
+    };
+
+    self.delete_folder_entry = function () {
+      console.log("remove folder entry");
+      self.vue.next_field_tag -= 1; // lol
+      var find_tag = "#new_field_" + self.vue.next_field_tag;
+      $(find_tag).detach();
+    };
+
 
     // Complete as needed.
     self.vue = new Vue({
@@ -121,14 +141,19 @@ var app = function() {
             edit_folders_id: null,
             edit_content: null,
             edit_button: false,
-            page: 'default'
-
+            page: 'default',
+            next_field_tag: 0,
 
         },
         methods: {
             get_more: self.get_more,
             add_folder: self.add_folder,
             delete_folder: self.delete_folder,
+
+            add_folder_entry: self.add_folder_entry,
+            delete_folder_entry: self.delete_folder_entry,
+            get_field_tag: self.get_field_tag,
+
             edit_folder:self.edit_folder,
             edit_submit:self.edit_submit
 
