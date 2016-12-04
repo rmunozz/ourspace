@@ -1,2 +1,2 @@
 # ourspace
-OurSpace is a virtual hangout spot for users. Users can chat and watch synchronized YouTube videos. A synchronized watching experience makes watching videos of their choice a more unified experience. Users in the room can interact in some way with the streaming content. 
+OurSpace is a personalized workspace where you can create folders that will open up an array of URLs of your choice, save text on your workspace, and use an interactive checklist.
