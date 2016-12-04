@@ -11,11 +11,12 @@ twilio_number = "+8318245151"
 @auth.requires_signature(hash_vars=False)
 def send_folder():
     url_content = json.dumps(db.folder(db.folder.id == request.vars.folder_idx).url_content)
+    phone_num = db.auth_user(db.auth_user.email == request.vars.user_email).phone
     out = ""
     for url in url_content:
         out += url
     message = client.sms.messages.create(
-        to=auth.user.phone,
+        to=phone_num,
         from_="8318245151",
         body=out[2:-2]
     )
@@ -27,11 +28,12 @@ def send_paste():
         response.flash= T("Please login to send your paste")
         return
     paste_content = db.paste(db.paste.user_email == request.vars.user_email).paste_content
+    phone_num = db.auth_user(db.auth_user.email == request.vars.user_email).phone
     out = ""
     for msg in paste_content:
         out += msg
     message = client.sms.messages.create(
-        to=auth.user.phone,
+        to=phone_num,
         from_="8318245151",
         body=out
     )

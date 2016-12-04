@@ -229,6 +229,7 @@ var app = function() {
       $.get(send_folder_phone_url,
       {
         folder_idx: folder_id,
+        user_email: self.vue.email,
       });
     };
 
