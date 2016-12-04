@@ -47,7 +47,12 @@
     paste area
   </div>
   <div class="col-md-4"> <!-- folders -->
-    folders
+    <template v-for="folder in folders">
+      <a v-on:click="open_urls(folder.url_content)">
+        <i class="fa fa-folder-open-o fa-fw"></i>
+        ${folder.folder_name}
+      </a>
+    </template>
   </div>
 </div>
 
