@@ -13,6 +13,7 @@ db.define_table('folder',
                 Field('user_email', default=auth.user.email if auth.user_id else None),
                 Field('folder_name', 'text'),
                 Field('url_content', 'list:string'),
+                Field('created_on', 'datetime', default=datetime.datetime.utcnow()),
                 )
 
 # I don't want to display the user email by default in all forms.

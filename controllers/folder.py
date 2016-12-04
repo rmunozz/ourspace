@@ -8,15 +8,18 @@ def get_folders():
     """This controller is used to get the folderss.  Follow what we did in lecture 10, to ensure
     that the first time, we get 4 folderss max, and each time the "load more" button is pressed,
     we load at most 4 more folderss."""
-    # Implement me!\
     folders = []
     has_more = False
 
-    rows = db().select(db.folder.ALL,orderby=~db.folder.url_content, limitby=(start_idx, end_idx + 1))
+    #rows = db().select(db.folder.ALL,orderby=~db.folder.url_content, limitby=(start_idx, end_idx + 1))
+    rows = db().select(db.folder.ALL, orderby=~db.folder.created_on, limitby=(start_idx, end_idx + 1))
     for i, r in enumerate(rows):
         if i < end_idx - start_idx:
+            urls = []
+            for url in r.url_content:
+                urls.append(url)
             t = dict(
-                url_content = r.url_content,
+                url_content = urls,
                 folder_name = r.folder_name,
                 user_email = r.user_email,
                 folder_id = r.id,
@@ -24,8 +27,10 @@ def get_folders():
             folders.append(t)
         else:
             has_more = True
+
     logged_in = auth.user_id is not None
     email = auth.user.email
+
     return response.json(dict(
         folders=folders,
         logged_in = logged_in,

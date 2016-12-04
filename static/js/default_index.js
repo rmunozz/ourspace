@@ -19,22 +19,22 @@ var app = function() {
         return v.map(function(e) {e._idx = k++;});
     };
 
-    function folder_url(start_indx, end_indx){
+    function folder_url(start_idx, end_idx){
         var pp = {
-            start_indx: start_indx,
-            end_indx: end_indx
+            start_idx: start_idx,
+            end_idx: end_idx
         };
         return get_folders_url + "?" + $.param(pp);
     }
     self.get_folders = function(){
-        $.getJSON(folder_url(0,4), function (data){
-           self.vue.folders = data.folders;
-           self.vue.has_more = data.has_more;
-           self.vue.logged_in = data.logged_in;
-           self.vue.email = data.email;
-           enumerate(self.vue.folders);
 
-        })
+        $.get(folder_url(0,4), function(data)
+           {
+             self.vue.folders = data.folders;
+             self.vue.logged_in = data.logged_in;
+             self.vue.email = data.email;
+             enumerate(self.vue.folders);
+           })
 
     };
     self.get_more = function () {
