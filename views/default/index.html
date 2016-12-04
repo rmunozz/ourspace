@@ -6,8 +6,14 @@
 <script>
   var get_folders_url = "{{=URL('folder', 'get_folders')}}";
   var get_paste_url = "{{=URL('paste', 'get_paste')}}";
-  var send_paste_url = "{{=URL('paste', 'send_paste')}}";
+  var send_paste_url = "{{=URL('paste',  'send_paste')}}";
   var add_folder_url = "{{=URL('folder', 'add_folder', user_signature=True)}}";
+  var del_folder_url = "{{=URL('folder', 'del_folder', user_signature=True)}}";
+  var edit_folder_get_url = "{{=URL('folder', 'edit_get_folder')}}";
+  var edit_folder_submit_url = "{{=URL('folder', 'edit_submit_folder', user_signature=True)}}";
+
+  var send_folder_phone_url = "{{=URL('sms', 'send_folder', user_signature=True)}}"
+  var send_paste_phone_url = "{{=URL('sms', 'send_paste', user_signature=True)}}"
 </script>
 {{end}}
 
@@ -28,11 +34,14 @@
 </div>
 
 <div class="row"> <!-- body button bar -->
-  <div class="col-md-2">
-  </div>
-  <div class="col-md-6"> <!-- paste save button-->
+  <div class="col-md-4"> <!-- paste save button-->
     <button v-on:click="send_paste()" type="button" class= "btn btn-info btn-xs btn-block" id="paste_save">
-      <i class="fa fa-share-square fa-fw" aria-hidden="true"></i> Save
+      <i class="fa fa-share-square fa-fw" aria-hidden="true"></i> Save Paste
+    </button>
+  </div>
+  <div class="col-md-4">
+    <button v-on:click="send_paste_phone()" type="button" class= "btn btn-default btn-xs btn-block" id="paste_save">
+      <i class="fa fa-paper-plane-o fa-fw" aria-hidden="true"></i> Send Paste
     </button>
   </div>
   <div class="col-md-4"> <!-- new folder button-->
@@ -41,22 +50,21 @@
                   <i class="fa fa-plus fa-fw"></i> New Folder
       </button>
     </div>
-    <div v-else>
+    <div v-if="!is_adding_folders">
     <button v-on:click="new_folder_button" class="btn btn-info btn-xs btn-block">
                 <i class="fa fa-plus fa-fw"></i> New Folder
     </button>
-  </div>
+    </div>
+
   </div>
 </div>
 
 <div class="row"> <!-- body -->
-  <div class="col-md-2"> <!-- checklists -->
-    checklists
-  </div>
-  <div class="col-md-6"> <!-- paste area -->
+  <div class="col-md-8"> <!-- paste area -->
     <textarea v-model="paste_content" placeholder="Paste useful information here!"></textarea>
   </div>
   <div class="col-md-4"> <!-- folders -->
+
     <div v-if="is_adding_folders">
       <div><input v-model="folder_name" placeholder="Folder Name" class="btn-block"></div>
       <div v-for="url_input in url_input_fields">
@@ -75,17 +83,45 @@
         </button>
       </div>
     </div>
-    <template v-for="folder in folders">
-      <div class="text-center">
-        <a v-on:click="open_urls(folder.url_content)">
-          <i class="fa fa-folder-open-o fa-fw"></i>
-          ${folder.folder_name}
-        </a>
-        <i v-on:click="folder_send_phone()" class="fa fa-paper-plane-o fa-fw" aria-hidden="true"></i>
-        <i v-on:click="edit_folder()" class="fa fa-pencil fa-fw" aria-hidden="true"></i>
-        <i v-on:click="delete_folder_entry()" class="fa fa-trash" aria-hidden="true"></i>
+
+    <div v-if="is_edit_folders">
+      <div><input v-model="edit_folder_name" placeholder="Folder Name" class="btn-block"></div>
+      <div v-for="url_edit in edit_url_input_fields">
+        ${url_edit}
+        <input v-model="url_edit.url_field" placeholder="URL" class="btn-block">
+      </div>
+      <div>
+        <button class="btn btn-default btn-xs" v-on:click="add_folder_entry()">
+          <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-default btn-xs" v-on:click="delete_folder_entry()">
+          <i class="fa fa-minus fa-fw" aria-hidden="true"></i>
+        </button>
+        <button class= "btn btn-default btn-xs" v-on:click="edit_folder_submit()" id="edit_submit"> Submit
+        </button>
+        <button class= "btn btn-default btn-xs" v-on:click="edit_folder__cancel_button()"> Cancel
+        </button>
+      </div>
     </div>
-    </template>
+
+
+    <template v-for="folder in folders">
+      <div class="folder_styling">
+        <div class="row">
+          <div class="col-xs-6 col-sm-6" v-on:click="open_urls(folder.url_content)">
+            <i class="fa fa-folder-open-o fa-fw"></i>
+            ${folder.folder_name}
+          </div>
+          <div class="col-xs-6 col-sm-6">
+            <div class="text-right">
+              <i v-on:click="folder_send_phone(folder._idx)" class="fa fa-paper-plane-o fa-fw" aria-hidden="true"></i>
+              <i v-on:click="edit_folder(folder._idx)" class="fa fa-pencil fa-fw" aria-hidden="true"></i>
+              <i v-on:click="delete_folder(folder._idx)" class="fa fa-trash" aria-hidden="true"></i>
+          </div>
+          </div>
+        </div>
+      </template>
+    </div>
   </div>
 </div>
 

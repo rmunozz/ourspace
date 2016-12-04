@@ -18,12 +18,16 @@ db.define_table('folder',
 
 db.define_table('paste',
                 Field('paste_content', 'text'),
+                Field('user_email', default=auth.user.email if auth.user_id else None),
+                Field('created_on', 'datetime', default=datetime.datetime.utcnow())
                )
 
 # I don't want to display the user email by default in all forms.
 db.folder.user_email.readable = db.folder.user_email.writable = False
 db.folder.folder_name.requires = IS_NOT_EMPTY()
 db.folder.url_content.requires = IS_NOT_EMPTY()
+
+db.paste.user_email.readable = db.paste.user_email.writable = False
 
 # after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)

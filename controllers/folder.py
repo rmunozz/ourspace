@@ -29,7 +29,9 @@ def get_folders():
             has_more = True
 
     logged_in = auth.user_id is not None
-    email = auth.user.email
+    email = ""
+    if logged_in:
+        email = auth.user.email
 
     return response.json(dict(
         folders=folders,
@@ -58,11 +60,19 @@ def del_folder():
     # Implement me!
     db(db.folder.id == request.vars.folders_id).delete()
     return "ok"
-    #return response.json(dict())
 
-def edit_folder_url():
-    edit_content = db.folder(db.folder.id == request.vars.folder_id).url_content
-    return response.json(dict(edit_content=edit_content))
+def edit_get_folder():
+    url_input_fields = db.folder(db.folder.id == request.vars.folder_id).url_content
+    folder_name = db.folder(db.folder.id == request.vars.folder_id).folder_name
+    edit_id = db.folder(db.folder.id == request.vars.folder_id).id
+    return response.json(dict(url_input_fields=url_input_fields, folder_name = folder_name, edit_id=edit_id))
+
+@auth.requires_signature(hash_vars=False)
+def edit_submit_folder():
+    po = db.folder(db.folder.id == request.vars.folders_id)
+    po.folder_name = request.vars.new_name
+    po.update_record()
+    return response.json(dict(folder=po))
 
 @auth.requires_signature(hash_vars=False)
 def edit_folder_submit():

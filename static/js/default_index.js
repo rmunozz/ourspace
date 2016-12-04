@@ -15,7 +15,6 @@ var app = function() {
     // Enumerates an array.
     var enumerate = function(v) {
         var k=0;
-        return;
         return v.map(function(e) {e._idx = k++;});
     };
 
@@ -34,6 +33,7 @@ var app = function() {
              self.vue.logged_in = data.logged_in;
              self.vue.email = data.email;
              enumerate(self.vue.folders);
+             self.get_paste();
            })
 
     };
@@ -67,6 +67,11 @@ var app = function() {
                 $.web2py.enableElement($("#add_folder_submit"));
                 self.vue.folders.unshift(data.folder);
                 self.vue.folder_content = "";
+                self.vue.folder_name = "";
+                self.vue.url_input_fields.forEach(function(element, index)
+                      {
+                        self.vue.url_input_fields[index] = "";
+                      });
                 enumerate(self.vue.folder);
             });
 
@@ -75,42 +80,61 @@ var app = function() {
 
     self.edit_folder = function(folders_idx){
         console.log("edit_folder");
-        // var pp = {folders_id:self.vue.folders[folders_idx].folders_id};
-        // self.vue.edit_folders_id = folders_idx;
-        // $.getJSON(is_edit_url_content + "?" + $.param(pp), function (data) {
-        //     self.vue.edit_content = data.edit_content;});
+        self.vue.is_edit_folders = true;
+        self.edit_folder_get_content(folders_idx);
     };
 
-    self.edit_submit = function(){
-        console.log('inside edit_submit');
-      self.vue.is_edit_folders = false;
-      self.vue.edit_button = true;
-        $.post(edit_folder_submit,{
-            edit_content: self.vue.edit_content,
-            folders_id: self.vue.folders[self.vue.edit_folders_id].folders_id
-        },
+    self.edit_folder_get_content = function(folders_idx) {
+      var folder_id = self.vue.folders[folders_idx].folder_id;
+      self.vue.edit_index = folders_idx;
+      $.post(edit_folder_get_url,
+        {
+          //data to send
+          folder_id: folder_id,
+        } ,
         function (data) {
-            $.web2py.enableElement($("#edit_folders_submit"));
-            self.vue.folders[self.vue.edit_folders_id].folders_content=self.vue.edit_content;
-            enumerate(self.vue.folders);
-        });
+          var url_list = JSON.parse(data.url_input_fields);
+          self.vue.edit_folder_name = data.folder_name;
+          self.vue.edit_id = data.edit_id;
+      });
     };
 
-    // self.edit_folders_button = function (folders_id) {
-    //     self.vue.is_edit_folders = !self.vue.is_edit_folders;
-    //     self.edit_folders(folders_id);
-    // };
+    self.edit_folder_submit = function(){
+      console.log('inside edit_submit');
+      self.vue.is_edit_folders = false;
+      var new_content = [];
+      self.vue.edit_url_input_fields.forEach(
+            function(element,index)
+            {
+                console.log(element);
+                new_content.push(element);
+            });
+        var new_url_stringy = JSON.stringify(new_content);
+        $.post(edit_folder_submit_url,
+          {
+            edit_content: self.vue.new_url_stringy,
+            new_name: self.vue.edit_folder_name,
+            folders_id: self.vue.edit_id,
+          },
+          function (data) {
+              $.web2py.enableElement($("#edit_submit"));
+              self.vue.folders[self.vue.edit_index].folder_name = data.folder.folder_name;
+
+              self.vue.edit_url_input_fields = [];
+              self.vue.edit_folder_name = "";
+          });
+    };
 
     self.delete_folder = function (folders_id) {
-        $.post(del_folders_url,
+        console.log(self.vue.folders[folders_id])
+        $.post(del_folder_url,
             {
-                folders_id: self.vue.folders[folders_id].folders_id
+                folders_id: self.vue.folders[folders_id].folder_id
             },
-
-                function () {
-                    self.vue.folders.splice(folders_id , 1);
-                    enumerate(self.vue.folders);
-                })
+            function () {
+                self.vue.folders.splice(folders_id , 1);
+                enumerate(self.vue.folders);
+            })
 
     };
 
@@ -135,22 +159,30 @@ var app = function() {
 
     self.delete_folder_entry = function () {
       console.log("remove folder entry");
-      self.vue.url_input_fields.pop();
+      if(self.vue.url_input_fields.length > 1)
+        self.vue.url_input_fields.pop();
     };
 
     self.send_paste = function() {
+      console.log(self.vue.email);
       $.post(send_paste_url,
         {
+            user_email: self.vue.email,
             paste_content: self.vue.paste_content,
         },
         function (data) {
             $.web2py.enableElement($("#paste_save"));
-            self.vue.paste_content = data.paste.paste_content;
+            //self.vue.paste_content = data.paste.paste_content;
         })
     };
 
     self.get_paste = function() {
-      $.get(get_paste_url, function(data)
+      console.log(self.vue.email);
+      $.post(get_paste_url,
+        {
+          user_email: self.vue.email,
+        }
+        , function(data)
         {
           self.vue.paste_content = data.paste_content;
         })
@@ -159,6 +191,29 @@ var app = function() {
     self.new_folder_button = function() {
       self.vue.is_adding_folders = !self.vue.is_adding_folders;
     }
+
+    self.edit_folder_cancel_button = function() {
+      self.vue.is_edit_folders = false;
+      self.vue.edit_url_input_fields = [];
+      self.vue.edit_folder_name = "";
+    };
+
+    self.folder_send_phone = function(folders_idx) {
+      var folder_id = self.vue.folders[folders_idx].folder_id
+      console.log("sending folder to phone");
+      $.get(send_folder_phone_url,
+      {
+        folder_idx: folder_id,
+      });
+    };
+
+    self.send_paste_phone = function() {
+      console.log("sending paste to phone");
+      $.get(send_paste_phone_url,
+        {
+          user_email: self.vue.email,
+        });
+    };
 
     // Complete as needed.
     self.vue = new Vue({
@@ -169,23 +224,29 @@ var app = function() {
             folders: [],
             get_folders: false,
             folder_name: null,
+
             is_adding_folders: false,
             is_edit_folders: false,
+
             has_more: false,
             logged_in: false,
             email: null,
+
             url_content: null,
+
             edit_folders_id: null,
-            edit_content: null,
+            edit_url_input_fields: [{url_field: ""}],
+            edit_folder_name: null,
             edit_button: false,
+            edit_id: -1,
+            edit_index: -1,
+
             page: 'default',
 
             paste_content: null,
 
             next_input_idx: 0,
             url_input_fields: [{url_field: ""}],
-
-
 
         },
         methods: {
@@ -198,21 +259,25 @@ var app = function() {
             add_folder_entry: self.add_folder_entry,
             delete_folder_entry: self.delete_folder_entry,
 
-            edit_folder:self.edit_folder,
-            edit_submit:self.edit_submit,
+            edit_folder: self.edit_folder,
+            edit_folder_get_content: self.edit_folder_get_content,
+            edit_folder_submit:self.edit_folder_submit,
+            edit_folder_cancel_button: self.edit_folder_cancel_button,
 
             open: self.open,
             open_urls: self.open_urls,
 
             send_paste: self.send_paste,
-            //get_paste: self.get_paste,
+
+            folder_send_phone: self.folder_send_phone,
+            send_paste_phone: self.send_paste_phone,
 
         }
 
     });
 
     self.get_folders();
-    self.get_paste();
+    //self.get_paste();
     $("#vue-div").show();
     return self;
 };

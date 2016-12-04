@@ -17,7 +17,7 @@ def get_user_name_from_email(email):
     else:
         return ' '.join([u.first_name, u.last_name])
 
-@auth.requires_login()
+
 def index():
     """
     This is your main controller.
@@ -28,15 +28,7 @@ def index():
         #check = (row.url_content).split(',')
         folder.append((row))
 
-    urls = []
-    user_urls = db(db.folder.user_email == auth.user.email).select()
-
-
-    urls = ['google.com', 'facebook.com']
-    return dict(folder=folder,check=check,urls=urls, user_urls=user_urls)
-
-
-
+    return dict(folder=folder)
 
 @auth.requires_login()
 def folder():
