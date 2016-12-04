@@ -14,21 +14,45 @@
 </a>
 
 
-<div>
-    <div id="vue-div">
-        <p>{{=user_urls}}</p>
-        <!-- testing for having the correct values -->
+
+<div id="vue-div">
+    <p>{{=user_urls}}</p>
+    <!-- testing for having the correct values -->
         {{for (folders) in folder:}}
         <div>
-            {{if auth.user.email == folders.user_email:}}
-                <button class="btn" v-on:click="open_urls({{=folders.url_content}})">
-                        <p>{{=folders.folder_name}}</p>
-                </button>
-            {{pass}}
+        {{if auth.user.email == folders.user_email:}}
+            <button class="btn-small btn" v-on:click="open_urls({{=folders.url_content}})">
+                    <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                {{=folders.folder_name}}
+            </button>
+        {{pass}}
         </div>
     {{pass}}
 
 
-     
+
+<div class="row"> <!-- login and settings bar -->
+  <div class="col-md-8">
+  </div>
+  <div class="col-md-4">
+    login | settings
+  </div>
 </div>
+
+<div class="row"> <!-- body -->
+  <div class="col-md-4"> <!-- checklists -->
+    checklists
+  </div>
+  <div class="col-md-4"> <!-- paste area -->
+    paste area
+  </div>
+  <div class="col-md-4"> <!-- folders -->
+    folders
+  </div>
+</div>
+
+ 
+</div> <!--- END VUE DIV -->
+
+
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>
