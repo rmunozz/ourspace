@@ -1,5 +1,15 @@
 # These are the controllers for your ajax api.
 import datetime
+
+def get_user_name_from_email(email):
+    """Returns a string corresponding to the user first and last names,
+    given the user email."""
+    u = db(db.auth_user.email == email).select().first()
+    if u is None:
+        return 'None'
+    else:
+        return ' '.join([u.first_name, u.last_name])
+
 def get_folders():
 
     start_idx = int(request.vars.start_idx) if request.vars.start_idx is not None else 0
@@ -30,14 +40,18 @@ def get_folders():
 
     logged_in = auth.user_id is not None
     email = ""
+    user_name = ""
     if logged_in:
         email = auth.user.email
+    if email:
+        user_name = get_user_name_from_email(email)
 
     return response.json(dict(
         folders=folders,
         logged_in = logged_in,
         has_more=has_more,
         email=email,
+        user_name = user_name,
     ))
 
 

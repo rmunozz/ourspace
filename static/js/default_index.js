@@ -45,6 +45,7 @@ var app = function() {
              self.vue.folders = data.folders;
              self.vue.logged_in = data.logged_in;
              self.vue.email = data.email;
+             self.vue.user_name = data.user_name.split(" ")[0];
              enumerate(self.vue.folders);
              self.get_paste();
            })
@@ -85,7 +86,7 @@ var app = function() {
                       {
                         self.vue.url_input_fields[index] = "";
                       });
-                enumerate(self.vue.folder);
+                enumerate(self.vue.folders);
             });
 
     };
@@ -110,6 +111,7 @@ var app = function() {
           var url_list = JSON.parse(data.url_input_fields);
           self.vue.edit_folder_name = data.folder_name;
           self.vue.edit_id = data.edit_id;
+          enumerate(self.vue.folders);
       });
     };
 
@@ -136,6 +138,7 @@ var app = function() {
 
               self.vue.edit_url_input_fields = [];
               self.vue.edit_folder_name = "";
+              enumerate(self.vue.folders)
           });
     };
 
@@ -210,12 +213,14 @@ var app = function() {
         return;
       }
       self.vue.is_adding_folders = !self.vue.is_adding_folders;
+      enumerate(self.vue.folders);
     }
 
     self.edit_folder_cancel_button = function() {
       self.vue.is_edit_folders = false;
       self.vue.edit_url_input_fields = [];
       self.vue.edit_folder_name = "";
+      enumerate(self.vue.folders);
     };
 
     self.folder_send_phone = function(folders_idx) {
@@ -251,6 +256,7 @@ var app = function() {
             has_more: false,
             logged_in: false,
             email: null,
+            user_name: null,
 
             url_content: null,
 
@@ -269,6 +275,7 @@ var app = function() {
 
             next_input_idx: 0,
             url_input_fields: [{url_field: ""}],
+
 
         },
         computed: {

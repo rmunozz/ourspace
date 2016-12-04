@@ -15,7 +15,7 @@ def send_folder():
     for url in url_content:
         out += url
     message = client.sms.messages.create(
-        to="8318189019",
+        to=auth.user.phone,
         from_="8318245151",
         body=out[2:-2]
     )
@@ -31,7 +31,7 @@ def send_paste():
     for msg in paste_content:
         out += msg
     message = client.sms.messages.create(
-        to="8318189019",
+        to=auth.user.phone,
         from_="8318245151",
         body=out
     )

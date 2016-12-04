@@ -65,6 +65,10 @@ auth = Auth(db, host_names=myconf.get('host.names'))
 service = Service()
 plugins = PluginManager()
 
+
+auth.settings.extra_fields['auth_user']= [
+    Field('phone')]
+
 # create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 
@@ -80,6 +84,7 @@ mail.settings.ssl = myconf.get('smtp.ssl') or False
 auth.settings.registration_requires_verification = False
 auth.settings.registration_requires_approval = False
 auth.settings.reset_password_requires_verification = True
+
 
 # More API examples for controllers:
 #

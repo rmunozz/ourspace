@@ -27,11 +27,27 @@
 
 <div class="row"> <!-- login and settings bar -->
   <div class="col-md-8">
+    <div v-if="logged_in">
+      <p class="text-left">
+        <div class="login_bar">
+        Welcome ${user_name}
+      </div>
+      </p>
+  </div>
   </div>
   <div class="col-md-4">
-    <p class="text-right">
-    login | settings
-  </p>
+  <div class="login_bar">
+      <div v-if="!logged_in">
+      <p class="text-right">
+        <a href="{{=URL('default', 'user')}}" >login</a>
+      <p>
+      </div>
+      <div v-if="logged_in">
+        <p class="text-right">
+          <a href="{{=URL('default', 'user/logout')}}" >logout</a> | <a href="{{=URL('default', 'user/profile')}}">settings</a>
+        </p>
+      </div>
+  </div>
   </div>
 </div>
 
