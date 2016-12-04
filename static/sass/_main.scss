@@ -17,3 +17,10 @@
   padding: 20px;
   @include border-radius(16px);
 }
+
+textarea {
+  width: 100%;
+  height: 800px;
+  border: none;
+  outline: none;
+}

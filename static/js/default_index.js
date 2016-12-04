@@ -26,8 +26,8 @@ var app = function() {
         };
         return get_folders_url + "?" + $.param(pp);
     }
-    self.get_folders = function(){
 
+    self.get_folders = function(){
         $.get(folder_url(0,4), function(data)
            {
              self.vue.folders = data.folders;
@@ -153,6 +153,9 @@ var app = function() {
             edit_content: null,
             edit_button: false,
             page: 'default',
+
+            paste_content: null,
+            paste_synch_interval_id: null,
 
             next_input_idx: 0,
             url_input_fields: [{url_field: ""}]

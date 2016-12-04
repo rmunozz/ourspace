@@ -16,6 +16,10 @@ db.define_table('folder',
                 Field('created_on', 'datetime', default=datetime.datetime.utcnow()),
                 )
 
+db.define_table('paste',
+                Field('paste_content', 'blob')
+               )
+
 # I don't want to display the user email by default in all forms.
 db.folder.user_email.readable = db.folder.user_email.writable = False
 db.folder.folder_name.requires = IS_NOT_EMPTY()
