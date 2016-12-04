@@ -27,6 +27,19 @@ var app = function() {
     }
 
     self.get_folders = function(){
+
+      self.vue.old_paste_content = self.vue.paste_content;
+      $("#textarea").on("change keyup paste", function() {
+        var currentVal = $(this).val();
+        if(currentVal == self.vue.old_paste_content) {
+            return; //check to prevent multiple simultaneous triggers
+        }
+      self.vue.old_paste_content = self.vue.paste_content;
+      //action to be performed on textarea changed
+      self.vue.textarea_changed = true;
+    });
+
+
         $.get(folder_url(0,4), function(data)
            {
              self.vue.folders = data.folders;
@@ -81,6 +94,7 @@ var app = function() {
     self.edit_folder = function(folders_idx){
         console.log("edit_folder");
         self.vue.is_edit_folders = true;
+        self.vue.is_adding_folders = false;
         self.edit_folder_get_content(folders_idx);
     };
 
@@ -172,6 +186,7 @@ var app = function() {
         },
         function (data) {
             $.web2py.enableElement($("#paste_save"));
+            self.vue.textarea_changed = false;
             //self.vue.paste_content = data.paste.paste_content;
         })
     };
@@ -249,11 +264,34 @@ var app = function() {
             page: 'default',
 
             paste_content: null,
+            old_paste_content: null,
+            textarea_changed: false,
 
             next_input_idx: 0,
             url_input_fields: [{url_field: ""}],
 
         },
+        computed: {
+
+          // check if new_folder_button should be enabled
+          folder_enabled : function ()
+              {
+                var enabled = false;
+                if((this.is_adding_folders == false) && (this.is_edit_folders == false))
+                  enabled = true;
+                return enabled;
+              },
+
+          // check if new_folder_button should be disabled
+          folder_disabled : function ()
+              {
+                var disabled = false;
+                if((this.is_adding_folders == true) || (this.is_edit_folders == true))
+                  disabled = true;
+                return disabled;
+              }
+        }
+        ,
         methods: {
             get_more: self.get_more,
             add_folder: self.add_folder,

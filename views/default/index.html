@@ -37,9 +37,15 @@
 
 <div class="row"> <!-- body button bar -->
   <div class="col-md-4"> <!-- paste save button-->
+    <div v-if="textarea_changed">
+      <button v-on:click="send_paste()" type="button" class= "btn btn-warning btn-xs btn-block" id="paste_save">
+        <i class="fa fa-share-square fa-fw" aria-hidden="true"></i> Save Paste
+    </div>
+    <div v-else>
     <button v-on:click="send_paste()" type="button" class= "btn btn-info btn-xs btn-block" id="paste_save">
       <i class="fa fa-share-square fa-fw" aria-hidden="true"></i> Save Paste
     </button>
+  </div>
   </div>
   <div class="col-md-4">
     <button v-on:click="send_paste_phone()" type="button" class= "btn btn-info btn-xs btn-block" id="paste_save">
@@ -47,12 +53,12 @@
     </button>
   </div>
   <div class="col-md-4"> <!-- new folder button-->
-    <div v-if="is_adding_folders">
-      <button v-bind:class="{disabled:is_adding_folders}" class="btn btn-info btn-xs btn-block">
+    <div v-if="folder_disabled">
+      <button class="btn btn-info btn-xs btn-block disabled">
                   <i class="fa fa-plus fa-fw"></i> New Folder
       </button>
     </div>
-    <div v-if="!is_adding_folders">
+    <div v-if="folder_enabled">
     <button v-on:click="new_folder_button" class="btn btn-info btn-xs btn-block">
                 <i class="fa fa-plus fa-fw"></i> New Folder
     </button>
@@ -63,7 +69,7 @@
 
 <div class="row"> <!-- body -->
   <div class="col-md-8"> <!-- paste area -->
-    <textarea v-model="paste_content" placeholder="Paste useful information here!"></textarea>
+    <textarea v-model="paste_content" placeholder="Paste useful information here!" id="textarea"></textarea>
   </div>
   <div class="col-md-4"> <!-- folders -->
 
@@ -101,7 +107,7 @@
         </button>
         <button class= "btn btn-default btn-xs" v-on:click="edit_folder_submit()" id="edit_submit"> Submit
         </button>
-        <button class= "btn btn-default btn-xs" v-on:click="edit_folder__cancel_button()"> Cancel
+        <button class= "btn btn-default btn-xs" v-on:click="edit_folder_cancel_button()"> Cancel
         </button>
       </div>
     </div>
