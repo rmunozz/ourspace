@@ -1,0 +1,41 @@
+{{extend 'layout.html'}}
+{{block head}}
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script>
+    var get_folders_url = "{{=URL('folder', 'get_folders')}}";
+    var add_folder_url = "{{=URL('folder', 'add_folder', user_signature=True)}}";
+    var del_folder_url = "{{=URL('folder', 'del_folder', user_signature=True)}}";
+    var is_edit_url_content = "{{=URL('folder','edit_folder_url')}}";
+    var edit_folder_submit = "{{=URL('folder', 'edit_folder_submit', user_signature=True)}}";
+</script>
+{{end}}
+
+
+<div id="vue-div" class="display:none">
+  ${url_content}
+
+  <input v-model="folder_name" placeholder="Folder Name">
+  <p>
+
+  <div v-for="url_input in url_input_fields">
+    <input v-model="url_input.url_field" placeholder="Insert link here">
+  </div>
+<<<<<<< HEAD
+    <div class="form-group" id="submit_record__row">
+      <div class="col-sm-9 col-sm-offset-3">
+        <input class="btn btn-primary" type="submit" value="Submit" >
+        <span>
+            <a href="{{=URL('default', 'index.html')}}" class="btn btn-warning">
+              <i></i> Cancel
+          </a>
+=======
+>>>>>>> workingspace-merged
+
+  <p>
+  <button class="btn-small btn-default" v-on:click="add_folder_entry()"> <i class="fa fa-plus" aria-hidden="true"></i>
+  <button class="btn-small btn-default" v-on:click="delete_folder_entry()"> <i class="fa fa-minus" aria-hidden="true"></i>
+  <button class= "btn-small btn-warning" v-on:click="add_folder()"> Submit
+
+
+</div> <!-- END VUE DIV -->
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>

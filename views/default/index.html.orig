@@ -1,0 +1,53 @@
+{{extend 'layout.html'}}
+
+{{block head}}
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+
+<script>
+  var get_folders_url = "{{=URL('folder', 'get_folders')}}";
+</script>
+{{end}}
+
+
+<a href="{{=URL('default', 'folder.html')}}" class="btn btn-warning">
+            <i class="fa fa-plus"></i> New Folder
+</a>
+
+
+<div>
+<<<<<<< HEAD
+    <div id="vue-div">
+        <p>{{=user_urls}}</p>
+        <!-- testing for having the correct values -->
+        {{for (folders) in folder:}}
+        <div>
+            {{if auth.user.email == folders.user_email:}}
+                <button class="btn" v-on:click="open_urls({{=folders.url_content}})">
+                        <p>{{=folders.folder_name}}</p>
+                </button>
+            {{pass}}
+        </div>
+    {{pass}}
+
+     </div> <!--End of Vue div-->
+</div>
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>
+=======
+
+    {{for (folders) in folder:}}
+        <div>
+            <!-- Here goes the code to display an individual post. The code below is just a placeholder. -->
+
+                {{if auth.user.email == folders.user_email:}}
+                    <button class="btn btn-default" onclick="alert('FUCK YOU!')">
+                        <p>{{=folders.folder_name}}</p>
+                    </button>
+                    
+                {{pass}}
+
+        </div>
+    {{pass}}
+
+     
+</div>
+>>>>>>> workingspace-merged
