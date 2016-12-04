@@ -74,10 +74,11 @@ var app = function() {
 
 
     self.edit_folder = function(folders_idx){
-        var pp = {folders_id:self.vue.folders[folders_idx].folders_id};
-        self.vue.edit_folders_id = folders_idx;
-        $.getJSON(is_edit_url_content + "?" + $.param(pp), function (data) {
-            self.vue.edit_content = data.edit_content;});
+        console.log("edit_folder");
+        // var pp = {folders_id:self.vue.folders[folders_idx].folders_id};
+        // self.vue.edit_folders_id = folders_idx;
+        // $.getJSON(is_edit_url_content + "?" + $.param(pp), function (data) {
+        //     self.vue.edit_content = data.edit_content;});
     };
 
     self.edit_submit = function(){
@@ -155,6 +156,10 @@ var app = function() {
         })
     };
 
+    self.new_folder_button = function() {
+      self.vue.is_adding_folders = !self.vue.is_adding_folders;
+    }
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -178,13 +183,17 @@ var app = function() {
             paste_content: null,
 
             next_input_idx: 0,
-            url_input_fields: [{url_field: ""}]
+            url_input_fields: [{url_field: ""}],
+
+
 
         },
         methods: {
             get_more: self.get_more,
             add_folder: self.add_folder,
             delete_folder: self.delete_folder,
+
+            new_folder_button: self.new_folder_button,
 
             add_folder_entry: self.add_folder_entry,
             delete_folder_entry: self.delete_folder_entry,

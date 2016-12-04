@@ -29,3 +29,14 @@ textarea {
   border: none;
   outline: none;
 }
+
+/* line 28, ../sass/_main.scss */
+a {
+  color: black;
+}
+
+/* line 32, ../sass/_main.scss */
+input {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
