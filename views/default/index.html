@@ -5,19 +5,16 @@
 
 <script>
   var get_folders_url = "{{=URL('folder', 'get_folders')}}";
+  var get_paste_url = "{{=URL('paste', 'get_paste')}}";
+  var send_paste_url = "{{=URL('paste', 'send_paste')}}";
 </script>
 {{end}}
 
 
-<a href="{{=URL('default', 'folder.html')}}" class="btn btn-warning">
-            <i class="fa fa-plus"></i> New Folder
-</a>
 
 
 
 <div id="vue-div">
-
-<p style="white-space: pre">${ paste_content }</p>
 
 <div class="row"> <!-- login and settings bar -->
   <div class="col-md-8">
@@ -26,6 +23,21 @@
     <p class="text-right">
     login | settings
   </p>
+  </div>
+</div>
+
+<div class="row"> <!-- body button bar -->
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-6"> <!-- paste save button-->
+    <button v-on:click="send_paste()" type="button" class= "btn btn-info btn-xs btn-block" id="paste_save">
+      <i class="fa fa-share-square fa-fw" aria-hidden="true"></i> Save
+    </button>
+  </div>
+  <div class="col-md-4"> <!-- new folder button-->
+    <a href="{{=URL('default', 'folder.html')}}" class="btn btn-info btn-xs btn-block">
+                <i class="fa fa-plus fa-fw"></i> New Folder
+    </a>
   </div>
 </div>
 

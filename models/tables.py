@@ -17,7 +17,7 @@ db.define_table('folder',
                 )
 
 db.define_table('paste',
-                Field('paste_content', 'blob')
+                Field('paste_content', 'text'),
                )
 
 # I don't want to display the user email by default in all forms.
