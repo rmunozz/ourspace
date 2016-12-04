@@ -14,7 +14,7 @@ def get_paste():
 
 def send_paste():
     if(request.vars.user_email == ""):
-        response.flash= T("Please login to save your paste!")
+        response.flash= T("Please login to save your paste")
         return
     p = db.folder(db.paste.user_email == request.vars.user_email)
     if p is None:

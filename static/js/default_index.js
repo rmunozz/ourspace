@@ -189,6 +189,11 @@ var app = function() {
     };
 
     self.new_folder_button = function() {
+      if(self.vue.email == "")
+      {
+        $.get(add_folder_denied);
+        return;
+      }
       self.vue.is_adding_folders = !self.vue.is_adding_folders;
     }
 

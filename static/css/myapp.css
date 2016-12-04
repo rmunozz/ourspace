@@ -28,20 +28,21 @@ textarea {
   height: 800px;
   border: none;
   outline: none;
+  margin-top: 10px;
 }
 
-/* line 28, ../sass/_main.scss */
+/* line 29, ../sass/_main.scss */
 a {
   color: black;
 }
 
-/* line 32, ../sass/_main.scss */
+/* line 33, ../sass/_main.scss */
 input {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-/* line 37, ../sass/_main.scss */
+/* line 38, ../sass/_main.scss */
 .folder_styling {
   margin-top: 10px;
   border: #cdcdcd medium solid;

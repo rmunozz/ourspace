@@ -80,3 +80,7 @@ def edit_folder_submit():
     p.url_content = request.vars.edit_content
     p.update_record()
     return response.json(dict(folders = p))
+
+def deny_add_folders():
+    response.flash = T("Please login to add a folder")
+    return "ok"
