@@ -26,8 +26,8 @@ var app = function() {
         return get_folders_url + "?" + $.param(pp);
     }
 
-    self.get_folders = function(){
-
+    self.jquery_init = function() {
+      // code from http://stackoverflow.com/questions/11338592/how-can-i-bind-to-the-change-event-of-a-textarea-in-jquery
       self.vue.old_paste_content = self.vue.paste_content;
       $("#textarea").on("change keyup paste", function() {
         var currentVal = $(this).val();
@@ -39,16 +39,53 @@ var app = function() {
       self.vue.textarea_changed = true;
     });
 
+      // code from http://jsfiddle.net/Handyman/fNjFF/11/
+      $('#paste_send').tooltip({
+      items: 'a.target',
+      content: 'Loading…',
+      show: true,
+      open: function(event, ui)
+      {
+          if (typeof(event.originalEvent) === 'undefined')
+          {
+              return false;
+          }
 
-        $.get(folder_url(0,4), function(data)
-           {
-             self.vue.folders = data.folders;
-             self.vue.logged_in = data.logged_in;
-             self.vue.email = data.email;
-             self.vue.user_name = data.user_name.split(" ")[0];
-             enumerate(self.vue.folders);
-             self.get_paste();
-           })
+          var $id = $(ui.tooltip).attr('id');
+
+          // close any lingering tooltips
+          $('div.ui-tooltip').not('#' + $id).remove();
+
+          // ajax function to pull in data and add it to the tooltip goes here
+      },
+      close: function(event, ui)
+      {
+          ui.tooltip.hover(function()
+          {
+              $(this).stop(true).fadeTo(400, 1);
+          },
+          function()
+          {
+              $(this).fadeOut('400', function()
+              {
+                  $(this).remove();
+              });
+          })
+      }
+    })
+    };
+
+    self.get_folders = function(){
+    // get the folder content
+    $.get(folder_url(0,100), function(data)
+       {
+         self.vue.folders = data.folders;
+         self.vue.logged_in = data.logged_in;
+         self.vue.email = data.email;
+         self.vue.user_name = data.user_name.split(" ")[0];
+         enumerate(self.vue.folders);
+         self.get_paste();
+       })
 
     };
 
@@ -88,7 +125,6 @@ var app = function() {
                       });
                 enumerate(self.vue.folders);
             });
-
     };
 
 
@@ -100,7 +136,9 @@ var app = function() {
     };
 
     self.edit_folder_get_content = function(folders_idx) {
-      var folder_id = self.vue.folders[folders_idx].folder_id;
+      enumerate(self.vue.folders);
+      var folder_id = self.vue.folders[folders_idx].id;
+      console.log("folder id: " + folder_id);
       self.vue.edit_index = folders_idx;
       $.post(edit_folder_get_url,
         {
@@ -323,10 +361,13 @@ var app = function() {
             folder_send_phone: self.folder_send_phone,
             send_paste_phone: self.send_paste_phone,
 
+            jquery_init: self.jquery_init,
+
         }
 
     });
 
+    self.jquery_init();
     self.get_folders();
     //self.get_paste();
     $("#vue-div").show();

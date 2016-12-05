@@ -18,7 +18,7 @@ def send_folder():
     message = client.sms.messages.create(
         to=phone_num,
         from_="8318245151",
-        body=out[2:-2]
+        body=out[4:-4]
     )
     return "ok"
 
