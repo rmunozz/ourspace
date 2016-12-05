@@ -49,5 +49,5 @@ input {
 /* line 42, ../sass/_main.scss */
 body {
   background-color: #FFFFFF;
-  background-image: url("http://127.0.01:8012/ourspace/static/images/pattern.png");
+  background-image: url("http://nickdichev.pythonanywhere.com/ourspace/static/images/pattern.png");
 }

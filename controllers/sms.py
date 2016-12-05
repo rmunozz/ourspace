@@ -1,3 +1,5 @@
+#!/usr/bin/env python2.7
+
 from twilio.rest import TwilioRestClient
 import json
 
@@ -14,6 +16,7 @@ def send_folder():
     phone_num = db.auth_user(db.auth_user.email == request.vars.user_email).phone
     out = ""
     for url in url_content:
+        session.flash = T(url[0])
         out += url
     message = client.sms.messages.create(
         to=phone_num,
@@ -30,11 +33,22 @@ def send_paste():
     paste_content = db.paste(db.paste.user_email == request.vars.user_email).paste_content
     phone_num = db.auth_user(db.auth_user.email == request.vars.user_email).phone
     out = ""
+    count = 0
+    msg_queue = []
     for msg in paste_content:
+        count += 1
         out += msg
-    message = client.sms.messages.create(
-        to=phone_num,
-        from_="8318245151",
-        body=out
-    )
+        if(count > 159):
+            msg_queue.append(out)
+            count = 0
+            out = ""
+    if(count <= 160):
+        msg_queue.append(out)
+
+    for msg in msg_queue:
+        message = client.sms.messages.create(
+            to=phone_num,
+            from_="8318245151",
+            body=msg
+        )
     return "ok"

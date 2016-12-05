@@ -147,6 +147,7 @@ var app = function() {
     };
 
 
+    // deprecated
     self.edit_folder = function(folders_idx){
         console.log("edit_folder");
         self.vue.is_edit_folders = true;
@@ -154,6 +155,7 @@ var app = function() {
         self.edit_folder_get_content(folders_idx);
     };
 
+    // deprecated
     self.edit_folder_get_content = function(folders_idx) {
       var my_folder_id = self.vue.folders[folders_idx].id;
       self.vue.edit_index = folders_idx;
@@ -169,6 +171,7 @@ var app = function() {
         });
     };
 
+    // deprecated
     self.edit_folder_submit = function(){
       console.log('inside edit_submit');
       self.vue.is_edit_folders = false;
@@ -202,10 +205,12 @@ var app = function() {
     };
 
     self.delete_folder = function (folders_id) {
-        console.log(self.vue.folders[folders_id])
+        console.log("look here: " + self.vue.folders[folders_id].folder_id)
+        var id_to_send = self.vue.folders[folders_id].folder_id;
+        console.log("id to send: " + id_to_send);
         $.post(del_folder_url,
             {
-                folders_id: self.vue.folders[folders_id].id
+                folders_id: id_to_send
             },
             function () {
                 self.vue.folders.splice(folders_id , 1);
