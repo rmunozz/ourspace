@@ -4,6 +4,8 @@ textarea {
   border: none;
   outline: none;
   margin-top: 10px;
+  background: rgb(255,255,255);
+  background: rgba(255,255,255, .5);
 }
 
 a {
@@ -11,13 +13,13 @@ a {
 }
 
 input {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  background: rgb(255,255,255);
+  background: rgba(255,255,255, .5);
 }
 
 .folder_styling {
   margin-top:10px;
-	border: #cdcdcd medium solid;
+	border: #303030 medium solid;
   padding: 5px;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -26,4 +28,18 @@ input {
 
 .login_bar {
   font-size: 20px;
+}
+
+.login_bar_welcome {
+  font-size: 30px;
+}
+
+.my_input {
+  margin-top:5px;
+  margin-bottom: 5px;
+}
+
+body {
+  background-color: #FFFFFF;
+  background-image: url("http://127.0.01:8008/ourspace/static/images/pattern.png");
 }

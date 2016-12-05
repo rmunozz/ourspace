@@ -5,30 +5,49 @@ textarea {
   border: none;
   outline: none;
   margin-top: 10px;
+  background: white;
+  background: rgba(255, 255, 255, 0.5);
 }
 
-/* line 9, ../sass/_main.scss */
+/* line 11, ../sass/_main.scss */
 a {
   color: black;
 }
 
-/* line 13, ../sass/_main.scss */
+/* line 15, ../sass/_main.scss */
 input {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  background: white;
+  background: rgba(255, 255, 255, 0.5);
 }
 
-/* line 18, ../sass/_main.scss */
+/* line 20, ../sass/_main.scss */
 .folder_styling {
   margin-top: 10px;
-  border: #cdcdcd medium solid;
+  border: #303030 medium solid;
   padding: 5px;
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
 
-/* line 27, ../sass/_main.scss */
+/* line 29, ../sass/_main.scss */
 .login_bar {
   font-size: 20px;
+}
+
+/* line 33, ../sass/_main.scss */
+.login_bar_welcome {
+  font-size: 30px;
+}
+
+/* line 37, ../sass/_main.scss */
+.my_input {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+/* line 42, ../sass/_main.scss */
+body {
+  background-color: #FFFFFF;
+  background-image: url("http://127.0.01:8008/ourspace/static/images/pattern.png");
 }

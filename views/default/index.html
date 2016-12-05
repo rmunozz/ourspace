@@ -27,7 +27,7 @@
   <div class="col-md-8">
     <div v-if="logged_in">
       <p class="text-left">
-        <div class="login_bar">
+        <div class="login_bar_welcome">
         Welcome ${user_name}
       </div>
       </p>
@@ -88,9 +88,9 @@
   <div class="col-md-4"> <!-- folders -->
 
     <div v-if="is_adding_folders">
-      <div><input v-model="folder_name" placeholder="Folder Name" class="btn-block"></div>
+      <div class="my_input"><input v-model="folder_name" placeholder="Folder Name" class="btn-block"></div>
       <div v-for="url_input in url_input_fields">
-        <input v-model="url_input.url_field" placeholder="URL" class="btn-block">
+        <div class=my_input><input v-model="url_input.url_field" placeholder="URL" class="btn-block"></div>
       </div>
       <div>
         <button class="btn btn-default btn-xs" v-on:click="add_folder_entry()">
