@@ -14,7 +14,7 @@ if request.global_settings.web2py_version < "2.14.1":
 from gluon.contrib.appconfig import AppConfig
 
 # once in production, remove reload=True to gain full speed
-myconf = AppConfig(reload=True)
+myconf = AppConfig()
 
 if not request.env.web2py_runtime_gae:
     # if NOT running on Google App Engine use SQLite or other DB
