@@ -62,7 +62,7 @@
   </div>
   </div>
   <div class="col-md-4">
-    <button v-on:click="send_paste_phone()" type="button" class= "btn btn-info btn-xs btn-block" id="paste_send" title="Send your saved paste content to your phone">
+    <button v-on:click="send_paste_phone()" type="button" class= "btn btn-info btn-xs btn-block" id="paste_send" title="Send saved paste content to your phone">
       <i class="fa fa-paper-plane-o fa-fw" aria-hidden="true"></i> Send Paste
     </button>
   </div>
@@ -73,7 +73,7 @@
       </button>
     </div>
     <div v-if="folder_enabled">
-    <button v-on:click="new_folder_button" class="btn btn-info btn-xs btn-block">
+    <button v-on:click="new_folder_button" class="btn btn-info btn-xs btn-block" id="paste_send" title="Create a group of links that all open with one click">
                 <i class="fa fa-plus fa-fw"></i> New Folder
     </button>
     </div>

@@ -22,8 +22,11 @@ def get_folders():
     has_more = False
 
     #rows = db().select(db.folder.ALL,orderby=~db.folder.url_content, limitby=(start_idx, end_idx + 1))
+    # this is bad -- should only get rows for current user
     rows = db().select(db.folder.ALL, orderby=~db.folder.created_on, limitby=(start_idx, end_idx + 1))
     for i, r in enumerate(rows):
+        if(r.user_email != request.vars.user_email):
+            continue
         if i < end_idx - start_idx:
             urls = []
             for url in r.url_content:

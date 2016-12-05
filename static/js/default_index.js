@@ -21,7 +21,8 @@ var app = function() {
     function folder_url(start_idx, end_idx){
         var pp = {
             start_idx: start_idx,
-            end_idx: end_idx
+            end_idx: end_idx,
+            user_email: self.vue.email,
         };
         return get_folders_url + "?" + $.param(pp);
     }
@@ -101,9 +102,26 @@ var app = function() {
     self.add_folder = function(){
         self.vue.is_adding_folders = false;
         var url_inputs = [];
-        self.vue.url_input_fields.forEach(function (element)
+        // create a copy of url_input_fields and do for each on that :)
+        // we need to do this since url_input_fields is used for vue.js nonsense
+        var copied_fields = jQuery.extend({}, self.vue.url_input_fields); // uh........
+        var mackey = Object.keys(copied_fields).map(function(key){return copied_fields[key];}); // uhhhhhh..............
+        console.log(mackey); // an homage to wesley
+        mackey.forEach(function (element)
                                           {
-                                            url_inputs.push(element.url_field);
+                                            var pattern = new RegExp('^(https:\\/\\/)?'+ // protocol
+                                             '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+                                             '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+                                             '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+                                             '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+                                             '(\\#[-a-z\\d_]*)?$','i');
+                                             res = element.url_field.substr(0,8);
+                                             if(!pattern.test(element.url_field)) {
+                                                window.alert("Please enter a valid URL.");
+                                              }else if(res != "https://" || res.substr(0,7)!="http://"){
+                                                element.url_field = "http://" + element.url_field;
+                                              }
+                                                url_inputs.push(element.url_field);
                                           } );
         console.log(url_inputs);
         var url_inputs_stringy = JSON.stringify(url_inputs);
@@ -184,7 +202,7 @@ var app = function() {
         console.log(self.vue.folders[folders_id])
         $.post(del_folder_url,
             {
-                folders_id: self.vue.folders[folders_id].folder_id
+                folders_id: self.vue.folders[folders_id].id
             },
             function () {
                 self.vue.folders.splice(folders_id , 1);
@@ -262,7 +280,7 @@ var app = function() {
     };
 
     self.folder_send_phone = function(folders_idx) {
-      var folder_id = self.vue.folders[folders_idx].folder_id
+      var folder_id = self.vue.folders[folders_idx].id
       console.log("sending folder to phone");
       $.get(send_folder_phone_url,
       {
