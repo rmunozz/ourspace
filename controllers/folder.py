@@ -25,8 +25,6 @@ def get_folders():
     # this is bad -- should only get rows for current user
     rows = db().select(db.folder.ALL, orderby=~db.folder.created_on, limitby=(start_idx, end_idx + 1))
     for i, r in enumerate(rows):
-        if(r.user_email != request.vars.user_email):
-            continue
         if i < end_idx - start_idx:
             urls = []
             for url in r.url_content:
@@ -65,7 +63,6 @@ def add_folder():
         folder_name = request.vars.folder_name,
         url_content= request.vars.url_fields,
         user_email = request.vars.email
-
     )
     t = db.folder(t_id)
     return response.json(dict(folder = t))
@@ -77,6 +74,7 @@ def del_folder():
     # Implement me!
     db(db.folder.id == request.vars.folders_id).delete()
     return "ok"
+
 
 def edit_get_folder():
     url_input_fields = db.folder(db.folder.id == request.vars.folder_id).url_content

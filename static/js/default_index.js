@@ -117,7 +117,7 @@ var app = function() {
                                              '(\\#[-a-z\\d_]*)?$','i');
                                              res = element.url_field.substr(0,8);
                                              if(!pattern.test(element.url_field)) {
-                                                window.alert("Please enter a valid URL.");
+                                                //window.alert("Please enter a valid URL.");
                                               }else if(res != "https://" || res.substr(0,7)!="http://"){
                                                 element.url_field = "http://" + element.url_field;
                                               }
@@ -137,9 +137,10 @@ var app = function() {
                 self.vue.folders.unshift(data.folder);
                 self.vue.folder_content = "";
                 self.vue.folder_name = "";
-                self.vue.url_input_fields.forEach(function(element, index)
+                self.vue.url_input_fields.splice(1, self.vue.url_input_fields.length);
+                self.vue.url_input_fields.forEach(function(element, index) // javascript....
                       {
-                        self.vue.url_input_fields[index] = "";
+                        self.vue.url_input_fields[index].url_field = "";
                       });
                 enumerate(self.vue.folders);
             });
@@ -154,21 +155,18 @@ var app = function() {
     };
 
     self.edit_folder_get_content = function(folders_idx) {
-      enumerate(self.vue.folders);
-      var folder_id = self.vue.folders[folders_idx].id;
-      console.log("folder id: " + folder_id);
+      var my_folder_id = self.vue.folders[folders_idx].id;
       self.vue.edit_index = folders_idx;
       $.post(edit_folder_get_url,
         {
-          //data to send
-          folder_id: folder_id,
-        } ,
+          folder_id: my_folder_id,
+        },
         function (data) {
           var url_list = JSON.parse(data.url_input_fields);
           self.vue.edit_folder_name = data.folder_name;
           self.vue.edit_id = data.edit_id;
           enumerate(self.vue.folders);
-      });
+        });
     };
 
     self.edit_folder_submit = function(){
@@ -192,7 +190,12 @@ var app = function() {
               $.web2py.enableElement($("#edit_submit"));
               self.vue.folders[self.vue.edit_index].folder_name = data.folder.folder_name;
 
-              self.vue.edit_url_input_fields = [];
+              //self.vue.edit_url_input_fields = [];
+              self.vue.url_input_fields.splice(1, self.vue.url_input_fields.length);
+              self.vue.url_input_fields.forEach(function(element, index) // javascript....
+                    {
+                      self.vue.url_input_fields[index].url_field = "";
+                    });
               self.vue.edit_folder_name = "";
               enumerate(self.vue.folders)
           });
@@ -269,12 +272,17 @@ var app = function() {
         return;
       }
       self.vue.is_adding_folders = !self.vue.is_adding_folders;
-      enumerate(self.vue.folders);
+      //enumerate(self.vue.folders);
     }
 
     self.edit_folder_cancel_button = function() {
       self.vue.is_edit_folders = false;
-      self.vue.edit_url_input_fields = [];
+      //self.vue.edit_url_input_fields = [];
+      self.vue.url_input_fields.splice(1, self.vue.url_input_fields.length);
+      self.vue.url_input_fields.forEach(function(element, index) // javascript....
+            {
+              self.vue.url_input_fields[index].url_field = "";
+            });
       self.vue.edit_folder_name = "";
       enumerate(self.vue.folders);
     };
