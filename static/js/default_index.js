@@ -293,7 +293,8 @@ var app = function() {
     };
 
     self.folder_send_phone = function(folders_idx) {
-      var folder_id = self.vue.folders[folders_idx].id
+      console.log("look:" + self.vue.folders[folders_idx].folder_id);
+      var folder_id = self.vue.folders[folders_idx].folder_id
       console.log("sending folder to phone");
       $.get(send_folder_phone_url,
       {
@@ -303,7 +304,6 @@ var app = function() {
     };
 
     self.send_paste_phone = function() {
-      console.log("sending paste to phone");
       $.get(send_paste_phone_url,
         {
           user_email: self.vue.email,
